@@ -41,7 +41,7 @@ function RecipePage() {
                     <TabsTrigger className="px-3 py-1 font-semibold rounded-full md:text-xl" value="bookmarked">Bookmarked Recipes</TabsTrigger>
                 </TabsList>
 
-                <TabsContent value="recipes" className="p-4">
+                <TabsContent value="recipes" className="h-10 p-4">
                     {!isLoading ? (
                         data.map((recipe) => (
                             <Recipe
@@ -55,7 +55,7 @@ function RecipePage() {
                     {(!isLoading && data.length < 1) && <p className="my-[50%] flex justify-center items-center gap-2 md:my-[30%] text-slate-500 text-center">No  Recipe In Your List, Add One <img className="w-6" src={img} /> </p>}
                 </TabsContent>
 
-                <TabsContent value="bookmarked" className="p-4">
+                <TabsContent value="bookmarked" className="h-10 p-4">
                     {!isLoading ? (
                         data.map((recipe) => (
                             <Recipe

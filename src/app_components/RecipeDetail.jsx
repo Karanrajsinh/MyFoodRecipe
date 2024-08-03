@@ -9,6 +9,7 @@ import { useUserAuth } from '@/context/UserAuth';
 import toast from 'react-hot-toast';
 import { capitalizeText } from '@/utils/uitls';
 import { addSavedRecipe, checkIsOwner, checkSavedRecipe, getRecipe, removeSavedRecipe } from '@/utils/firebase';
+import { useQueryClient } from '@tanstack/react-query';
 
 const RecipeDetail = () => {
 
@@ -20,7 +21,7 @@ const RecipeDetail = () => {
   const [loading, setLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
-
+  const query = useQueryClient();
   useEffect(() => {
     setLoading(true);
 
@@ -59,6 +60,7 @@ const RecipeDetail = () => {
 
     if (!isBookmarked) {
       addSavedRecipe(uid, id).then(() => {
+        query.invalidateQueries({ queryKey: ["recipes", "bookmarked"] })
         toast.success('Recipe Saved')
         setIsBookmarked(true);
         setIsSaving(false);
@@ -67,6 +69,7 @@ const RecipeDetail = () => {
 
     if (isBookmarked) {
       removeSavedRecipe(uid, id).then(() => {
+        query.invalidateQueries({ queryKey: ["recipes", "bookmarked"] })
         toast.success('Recipe Unsaved')
         setIsBookmarked(false);
         setIsSaving(false);

@@ -6,14 +6,14 @@ const UserAuthContext = createContext();
 
 function UserAuthProvider({ children }) {
 
-  const [name, setName] = useState({});
+  const [name, setName] = useState();
   const auth = getAuth();
   const [error, setError] = useState('');
   const [uid, setUid] = useState('');
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (data) => {
-      setUid(data?.uid);
-      setName(data?.displayName);
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setUid(user?.uid);
+      setName(user?.displayName);
     })
     return () => unsubscribe();
     /* eslint-disable */

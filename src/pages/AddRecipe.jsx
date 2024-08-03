@@ -6,6 +6,8 @@ import { addRecipe } from '@/utils/firebase';
 import { ImSpinner8 } from 'react-icons/im';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
+import { getAuth } from 'firebase/auth';
+import { useQueryClient } from '@tanstack/react-query';
 
 
 
@@ -20,7 +22,11 @@ function AddRecipe() {
     }
   });
 
-  const { uid, name } = useUserAuth();
+  const auth = getAuth();
+  const query = useQueryClient();
+
+  const name = auth.currentUser.displayName;
+  const { uid } = useUserAuth();
 
   const { fields: ingredientFields, append: addIngredient, remove: removeIngredient } = useFieldArray({
     control,
@@ -53,6 +59,7 @@ function AddRecipe() {
       ingredientsNameList: formatedIng.map((ing) => ing.name)
     }
     addRecipe(uid, formatedData, name).then(() => {
+      query.invalidateQueries({ queryKey: ['recipes', 'recipes'] })
       setIsLoading(false);
       toast.success('Recipe Created')
     }).catch((err) => {
