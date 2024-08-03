@@ -6,11 +6,12 @@ const RecipeContext = createContext();
 function RecipesProvider({ children }) {
 
   const [fetchedRecipes, setFetchedRecipes] = useState([]);
-
+  const [fetchingRecipes, setFetchingRecipes] = useState(false);
+  const [noRecipeFound, setNoRecipeFound] = useState(false);
   return (
     <RecipeContext.Provider value={
       {
-        fetchedRecipes, setFetchedRecipes
+        fetchedRecipes, setFetchedRecipes, fetchingRecipes, setFetchingRecipes, noRecipeFound, setNoRecipeFound
       }}>
       {children}
     </RecipeContext.Provider>

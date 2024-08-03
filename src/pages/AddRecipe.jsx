@@ -3,10 +3,16 @@ import { useForm, useFieldArray, Controller } from 'react-hook-form';
 import { MdCancel } from "react-icons/md";
 import { Select, SelectTrigger, SelectContent, SelectGroup, SelectItem, SelectValue } from '@/components/ui/select'
 import { addRecipe } from '@/utils/firebase';
+import { ImSpinner8 } from 'react-icons/im';
+import toast from 'react-hot-toast';
+import { useState } from 'react';
 
 
 
 function AddRecipe() {
+
+  const [isLoading, setIsLoading] = useState(false);
+
   const { register, handleSubmit, setValue, control, formState: { errors } } = useForm({
     defaultValues: {
       ingredients: [{ name: '', quantity: '' }],
@@ -28,6 +34,7 @@ function AddRecipe() {
 
   async function onSubmit(data) {
 
+    setIsLoading(true);
     const formatedIng = data.ingredients.map((ing) => ({
       name: ing.name.toLowerCase(),
       quantity: ing.quantity,
@@ -45,16 +52,24 @@ function AddRecipe() {
       ingredients: formatedIng,
       ingredientsNameList: formatedIng.map((ing) => ing.name)
     }
-    addRecipe(uid, formatedData, name)
+    addRecipe(uid, formatedData, name).then(() => {
+      setIsLoading(false);
+      toast.success('Recipe Created')
+    }).catch((err) => {
+      toast.error('Unable To Create Recipe');
+      setIsLoading(false)
+      console.error(err);
+    })
   }
 
   return (
-    <div className="flex items-center justify-center h-[80vh]">
+    <div className="flex items-center justify-center md:mt-28">
       <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-3xl p-8 bg-white border rounded-lg shadow-lg border-slate-300">
-        <h1 className="mb-6 text-2xl font-bold text-red-400">Add Recipe</h1>
-        <div className="flex justify-between mb-6">
-          <div className="flex flex-col w-[4/10] pr-4 mt-10 ">
+        <h1 className="mb-6 text-lg font-bold text-red-400 md:text-2xl">Add Recipe</h1>
+        <div className="flex flex-col justify-between gap-5 md:flex-row md:mb-6">
+          <div className="flex flex-col w-full text-sm md:pr-4 md:mt-10 ">
             <input
+              disabled={isLoading}
               type="text"
               placeholder="Title"
               {...register('title', { required: 'Title is required' })}
@@ -63,6 +78,7 @@ function AddRecipe() {
             {errors.title && <p className="text-red-500 ">{errors.title.message}</p>}
 
             <input
+              disabled={isLoading}
               type="text"
               placeholder="Photo URL"
               {...register('photoUrl', {
@@ -74,17 +90,25 @@ function AddRecipe() {
               className="w-full p-2 mt-8 border border-gray-400 rounded-lg focus:border-red-400 focus:outline-none"
             />
             {errors.photoUrl && <p className="text-red-500 ">{errors.photoUrl.message}</p>}
-
             <input
+              disabled={isLoading}
               type="number"
               placeholder="Servings"
               {...register('servings', { required: 'Servings is required' })}
               className="w-full p-2 mt-8 border border-gray-400 rounded-lg focus:border-red-400 focus:outline-none"
             />
             {errors.servings && <p className="text-red-500 ">{errors.servings.message}</p>}
-
+            <input
+              disabled={isLoading}
+              type="text"
+              placeholder="Category"
+              {...register('category', { required: 'Category is required' })}
+              className="z-10 w-full p-2 mt-8 border border-gray-400 rounded-lg focus:border-red-400 focus:outline-none"
+            />
+            {errors.category && <p className="text-red-500 ">{errors.category.message}</p>}
             <div className="flex mt-8">
               <input
+                disabled={isLoading}
                 type="number"
                 placeholder="Prep Time"
                 {...register('prepTime.time', { required: 'Prep Time is required', min: { value: 1, message: 'Must be  greater than 0' } })}
@@ -101,7 +125,7 @@ function AddRecipe() {
                       setValue(`prepTime.unit`, value);
                     }}
                   >
-                    <SelectTrigger className="w-[100px] ml-2">
+                    <SelectTrigger className=" text-xs md:text-sm w-[100px] ml-2">
                       <SelectValue placeholder="min" />
                     </SelectTrigger>
                     <SelectContent>
@@ -117,6 +141,7 @@ function AddRecipe() {
 
             <div className="flex mt-8">
               <input
+                disabled={isLoading}
                 type="number"
                 placeholder="Cook Time"
                 {...register('cookTime.time', { required: 'Cook Time is required', min: { value: 1, message: 'Must be  greater than 0' } })}
@@ -133,7 +158,7 @@ function AddRecipe() {
                       setValue(`cookTime.unit`, value);
                     }}
                   >
-                    <SelectTrigger className="w-[100px] ml-2">
+                    <SelectTrigger className=" text-xs md:text-sm w-[100px] ml-2">
                       <SelectValue placeholder="min" />
                     </SelectTrigger>
                     <SelectContent>
@@ -148,28 +173,23 @@ function AddRecipe() {
 
             {errors.cookTime && <p className="text-red-500 ">{errors.cookTime.time.message}</p>}
 
-            <input
-              type="text"
-              placeholder="Category"
-              {...register('category', { required: 'Category is required' })}
-              className="w-full p-2 mt-8 border border-gray-400 rounded-lg focus:border-red-400 focus:outline-none"
-            />
-            {errors.category && <p className="text-red-500 ">{errors.category.message}</p>}
           </div>
 
-          <div className="flex flex-col justify-around w-2/3 pl-4 ">
+          <div className="flex flex-col justify-around w-full text-sm md:pl-4 ">
             <div className="mb-4">
-              <h2 className="mb-2 text-lg font-semibold text-red-400">Ingredients</h2>
+              <h2 className="mb-2 font-semibold text-red-400 md:text-lg">Ingredients</h2>
               <div className="p-2 overflow-y-scroll border rounded-lg max-h-60 custom-scrollbar">
                 {ingredientFields.map((field, index) => (
                   <div key={field.id} className="flex items-center mb-2">
                     <input
+                      disabled={isLoading}
                       type="text"
                       placeholder="Name"
                       {...register(`ingredients.${index}.name`, { required: 'Name is required' })}
                       className="w-1/2 p-2 border border-gray-400 rounded-lg focus:border-red-400 focus:outline-none"
                     />
                     <input
+                      disabled={isLoading}
                       type="number"
                       placeholder="Quantity"
                       {...register(`ingredients.${index}.quantity`, { required: 'Quantity is required', min: { value: 1, message: 'Must be  greater than 0' } })}
@@ -186,7 +206,7 @@ function AddRecipe() {
                             setValue(`ingredients.${index}.unit`, value);
                           }}
                         >
-                          <SelectTrigger className="w-[250px] ml-2">
+                          <SelectTrigger className=" w-[150px] z-10 text-xs md:text-sm md:w-[250px] ml-2">
                             <SelectValue placeholder="Unit" />
                           </SelectTrigger>
                           <SelectContent>
@@ -208,7 +228,7 @@ function AddRecipe() {
                     {ingredientFields.length > 1 && (
                       <button
                         type="button"
-                        className="ml-2 text-red-500"
+                        className="ml-2 text-lg text-red-500"
                         onClick={() => removeIngredient(index)}
                       >
                         <MdCancel />
@@ -218,7 +238,7 @@ function AddRecipe() {
                 ))}
                 <button
                   type="button"
-                  className="p-2 mt-2 text-white bg-red-400 rounded-lg"
+                  className="p-2 mt-2 text-xs text-white bg-red-400 rounded-lg"
                   onClick={() => addIngredient({ name: '', quantity: '' })}
                 >
                   Add Ingredient
@@ -228,11 +248,12 @@ function AddRecipe() {
             </div>
 
             <div>
-              <h2 className="mb-2 text-lg font-semibold text-red-400">Steps</h2>
+              <h2 className="mb-2 font-semibold text-red-400 md:text-lg">Steps</h2>
               <div className="p-2 overflow-y-scroll border rounded-lg max-h-40 custom-scrollbar">
                 {stepFields.map((field, index) => (
                   <div key={field.id} className="flex items-center mb-2">
                     <textarea
+                      disabled={isLoading}
                       placeholder="Step Description"
                       {...register(`steps.${index}.description`, { required: 'Step description is required' })}
                       className="w-full p-2 border border-gray-400 rounded-lg focus:border-red-400 focus:outline-none"
@@ -241,7 +262,7 @@ function AddRecipe() {
                     {stepFields.length > 1 && (
                       <button
                         type="button"
-                        className="ml-2 text-red-500"
+                        className="ml-2 text-lg text-red-500"
                         onClick={() => removeStep(index)}
                       >
                         <MdCancel />
@@ -251,7 +272,7 @@ function AddRecipe() {
                 ))}
                 <button
                   type="button"
-                  className="p-2 mt-2 text-white bg-red-400 rounded-lg"
+                  className="p-2 mt-2 text-xs text-white bg-red-400 rounded-lg"
                   onClick={() => addStep({ description: '' })}
                 >
                   Add Step
@@ -263,9 +284,12 @@ function AddRecipe() {
         </div>
         <button
           type="submit"
-          className="w-full p-2 text-white bg-red-400 rounded-lg"
+          className="flex items-center justify-center w-full gap-4 p-2 mt-6 text-white bg-red-400 rounded-lg"
         >
-          Add Recipe
+          <span>
+            Add Recipe
+          </span>
+          {isLoading && <ImSpinner8 className='spinner-rotate' />}
         </button>
       </form>
     </div>

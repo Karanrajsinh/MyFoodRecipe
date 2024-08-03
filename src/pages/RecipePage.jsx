@@ -34,11 +34,11 @@ function RecipePage() {
     // /* eslint-ensable */
 
     return (
-        <div className="flex flex-col items-center w-full h-[80vh] p-4 mt-20">
-            <Tabs onValueChange={(value) => setTab(value)} defaultValue="recipes" className="w-full max-w-4xl rounded-lg">
-                <TabsList className="flex p-2 rounded-t-lg justify-evenly">
-                    <TabsTrigger className="px-4 py-2 text-xl font-semibold" value="recipes">Recipes</TabsTrigger>
-                    <TabsTrigger className="px-4 py-2 text-xl font-semibold" value="bookmarked">Bookmarked Recipes</TabsTrigger>
+        <div className="flex flex-col items-center w-full h-[80vh] mt-14  md:mt-20">
+            <Tabs onValueChange={(value) => setTab(value)} defaultValue="recipes" className="w-full max-w-4xl">
+                <TabsList className="flex p-3 justify-evenly">
+                    <TabsTrigger className="px-3 py-1 font-semibold rounded-full md:text-xl" value="recipes">Recipes</TabsTrigger>
+                    <TabsTrigger className="px-3 py-1 font-semibold rounded-full md:text-xl" value="bookmarked">Bookmarked Recipes</TabsTrigger>
                 </TabsList>
 
                 <TabsContent value="recipes" className="p-4">
@@ -50,9 +50,9 @@ function RecipePage() {
                             />
                         ))
                     ) : (
-                        <p className="flex items-center justify-center gap-3"><ImSpinner8 className="text-red-400 spinner-rotate" /><span className="text-slate-600">Loading recipes...</span></p>
+                        <p className="flex text-sm md:text-lg items-center justify-center my-[60%] md:my-[40%] gap-3"><ImSpinner8 className="text-red-400 spinner-rotate" /><span className="text-slate-600">Loading recipes...</span></p>
                     )}
-                    {(!isLoading && data.length < 1) && <p>No Recipe In Your List, Add One </p>}
+                    {(!isLoading && data.length < 1) && <p className="my-[50%] md:my-[30%] text-slate-500 text-center">No Recipe In Your List, Add One </p>}
                 </TabsContent>
 
                 <TabsContent value="bookmarked" className="p-4">
@@ -64,9 +64,9 @@ function RecipePage() {
                             />
                         ))
                     ) : (
-                        <p className="flex items-center justify-center gap-3"><ImSpinner8 className="text-red-400 spinner-rotate" /><span className="text-slate-600">Loading recipes...</span></p>
+                        <p className="flex text-sm md:text-lg items-center justify-center my-[60%] md:my-[40%] gap-3"><ImSpinner8 className="text-red-400 spinner-rotate" /><span className="text-slate-600">Loading recipes...</span></p>
                     )}
-                    {(!isLoading && data.length < 1) && <p>No Recipe In Your List, Add One </p>}
+                    {(!isLoading && data.length < 1) && <p className="my-[50%] md:my-[30%] text-slate-500 text-center">No  Recipe In Your List, Add One </p>}
                 </TabsContent>
             </Tabs>
         </div>

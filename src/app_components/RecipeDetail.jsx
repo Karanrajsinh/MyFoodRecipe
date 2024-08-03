@@ -67,7 +67,7 @@ const RecipeDetail = () => {
 
     if (isBookmarked) {
       removeSavedRecipe(uid, id).then(() => {
-        toast.success('Recipe UnSaved')
+        toast.success('Recipe Unsaved')
         setIsBookmarked(false);
         setIsSaving(false);
       })
@@ -77,24 +77,23 @@ const RecipeDetail = () => {
 
   return (
     <>
-      <Button className="relative flex px-8 py-6 text-2xl text-center bg-red-400 rounded-3xl top-14 left-16 hover:bg-opacity-90 hover:bg-red-400" onClick={() => navigate(-1)}><FaArrowLeftLong /><span className='flex mb-1 ml-2'>Back</span></Button>
       {
         loading ? (
-          <p className='text-center m-[20%]'>Loading Recipe</p>
+          <p className='flex items-center justify-center my-[80%]  md:m-[20%] text-center text-sm md:text-lg gap-2 text-slate-500'>Loading Recipe<ImSpinner8 className='text-red-400 spinner-rotate' /></p>
         ) : (
           <>
-            <div className="flex flex-col mt-16 w-[70%] min-h-screen mx-auto">
-              <div className="relative bg-black rounded-2xl h-80">
+            <div className=" flex flex-col w-full  md:mt-16 md:w-[70%] md:min-h-screen mx-auto">
+              <div className="relative h-40 bg-black md:rounded-2xl md:h-80">
                 <img
                   src={formatedRecipeData?.photoUrl}
                   alt={formatedRecipeData?.title}
-                  className="object-cover w-full h-80 rounded-2xl opacity-70"
+                  className="object-cover w-full h-40 md:h-80 md:rounded-2xl opacity-70"
                 />
-                <div className="absolute top-0 left-0 flex items-center justify-center w-full bg-red-500 bg-opacity-40 h-80 rounded-2xl">
-                  <h1 className="text-4xl font-bold text-red-100">{formatedRecipeData?.title}</h1>
+                <div className="absolute top-0 left-0 flex items-center justify-center w-full h-40 bg-red-500 bg-opacity-40 md:h-80 md:rounded-2xl">
+                  <h1 className="text-2xl font-bold text-red-100 md:text-4xl">{formatedRecipeData?.title}</h1>
                 </div>
               </div>
-              <div className="relative z-10 p-8 mx-auto -mt-16 bg-[#f3cfcf] text-[#993b3b] border border-red-300 rounded-3xl shadow-md w-[50em]">
+              <div className="text-sm md:text-base relative z-10 p-6 md:p-8 mx-auto -mt-8 md:-mt-16 bg-[#f3cfcf] text-[#993b3b] border border-red-300 rounded-3xl shadow-md min-w-[24em] max-w-[25em] md:max-w-[50em]">
                 <div className="flex items-start justify-between mb-4">
                   <div>
                     <p className="mb-1 italic"><strong>Author:</strong> {formatedRecipeData?.author}</p>
@@ -108,19 +107,19 @@ const RecipeDetail = () => {
                       {!isAuthor && (
                         <>
                           {isBookmarked ? (
-                            <FaBookmark className="text-3xl" />
+                            <FaBookmark className="text-2xl md:text-3xl" />
                           ) : (
-                            <FiBookmark className="text-3xl" />
+                            <FiBookmark className="text-2xl md:text-3xl" />
                           )}
                         </>
                       )}
                     </button>
-                    {isSaving && <ImSpinner8 className='text-xl spinner-rotate' />}
+                    {isSaving && <ImSpinner8 className='mx-auto text-sm md:text-xl spinner-rotate' />}
                   </div>
                 </div>
                 <div className="mb-4">
-                  <h3 className="mb-2 text-2xl font-semibold">Ingredients:</h3>
-                  <ul className="pl-5 mb-4 list-disc">
+                  <h3 className="mb-2 text-lg font-semibold md:text-2xl">Ingredients:</h3>
+                  <ul className="pl-5 mb-4 overflow-y-scroll list-disc max-h-20 custom-scrollbar">
                     {formatedRecipeData?.ingredients.map((ingredient, index) => (
                       <li key={index} className="mb-1">
                         {ingredient.name} {`(${ingredient.quantity}${ingredient.unit === " " ? "" : ingredient.unit})`}
@@ -129,14 +128,15 @@ const RecipeDetail = () => {
                   </ul>
                 </div>
                 <div>
-                  <h3 className="mb-2 text-2xl font-semibold">Steps:</h3>
-                  <ol className="pl-5 list-decimal">
+                  <h3 className="mb-2 text-lg font-semibold md:text-2xl">Steps:</h3>
+                  <ol className="pl-5 overflow-y-scroll list-decimal max-h-40 custom-scrollbar">
                     {formatedRecipeData?.steps.map((step, index) => (
                       <li key={index} className="mb-3">{step.description}</li>
                     ))}
                   </ol>
                 </div>
               </div>
+              <Button className="flex text-sm mt-6 items-center justify-center w-[8em] mx-auto text-center bg-red-400 md:px-8 md:py-6 md:text-2xl rounded-3xl hover:bg-opacity-90 hover:bg-red-400" onClick={() => navigate(-1)}><FaArrowLeftLong /><span className='flex ml-2 md:mb-1'>Back</span></Button>
             </div>
           </>
         )
