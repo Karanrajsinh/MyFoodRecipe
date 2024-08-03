@@ -51,10 +51,8 @@ function SearchBar() {
     }
 
     getDocs(firestoreQuery).then((response) => {
-      console.log(response.empty, 'response')
       let data = [];
       response.forEach((doc) => {
-        console.log(doc.data(), 'data recieved');
         data.push(doc.data())
       });
       setFetchedRecipes(data);
