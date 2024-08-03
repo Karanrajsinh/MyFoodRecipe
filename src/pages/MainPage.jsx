@@ -3,7 +3,7 @@ import '../index.css'
 import SearchBar from "../app_components/SearchBar";
 import { useRecipes } from "@/context/Recipes";
 import { ImSpinner8 } from "react-icons/im";
-import img from "../../public/cook-book.png"
+import img from "../../public/recipe-book.png"
 
 function MainPage() {
 

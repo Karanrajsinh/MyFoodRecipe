@@ -5,7 +5,7 @@ import { useState } from "react";
 import { getUserRecipes, getUserSavedRecipes } from '../utils/firebase'
 import { ImSpinner8 } from "react-icons/im";
 import { useQuery } from "@tanstack/react-query";
-
+import img from '../../public/recipe-book.png'
 function RecipePage() {
     // const [recipesData, setRecipesData] = useState([]);
     // const [savedRecipesData, setSavedRecipesData] = useState([]);
@@ -52,7 +52,7 @@ function RecipePage() {
                     ) : (
                         <p className="flex text-sm md:text-lg items-center justify-center my-[60%] md:my-[40%] gap-3"><ImSpinner8 className="text-red-400 spinner-rotate" /><span className="text-slate-600">Loading recipes...</span></p>
                     )}
-                    {(!isLoading && data.length < 1) && <p className="my-[50%] md:my-[30%] text-slate-500 text-center">No Recipe In Your List, Add One </p>}
+                    {(!isLoading && data.length < 1) && <p className="my-[50%] flex justify-center items-center gap-2 md:my-[30%] text-slate-500 text-center">No  Recipe In Your List, Add One <img className="w-6" src={img} /> </p>}
                 </TabsContent>
 
                 <TabsContent value="bookmarked" className="p-4">
@@ -66,7 +66,7 @@ function RecipePage() {
                     ) : (
                         <p className="flex text-sm md:text-lg items-center justify-center my-[60%] md:my-[40%] gap-3"><ImSpinner8 className="text-red-400 spinner-rotate" /><span className="text-slate-600">Loading recipes...</span></p>
                     )}
-                    {(!isLoading && data.length < 1) && <p className="my-[50%] md:my-[30%] text-slate-500 text-center">No  Recipe In Your List, Add One </p>}
+                    {(!isLoading && data.length < 1) && <p className="my-[50%] flex justify-center items-center gap-2 md:my-[30%] text-slate-500 text-center">No  Recipe In Your List, Add One <img className="w-6" src={img} /> </p>}
                 </TabsContent>
             </Tabs>
         </div>
