@@ -3,6 +3,7 @@ import '../index.css'
 import SearchBar from "../app_components/SearchBar";
 import { useRecipes } from "@/context/Recipes";
 import { ImSpinner8 } from "react-icons/im";
+import img from "../../public/cook-book.png"
 
 function MainPage() {
 
@@ -21,9 +22,9 @@ function MainPage() {
                             />
                         ))
                     )}
-                    {(!fetchingRecipes && fetchedRecipes.length < 1 && !noRecipeFound) && <p className="flex items-center justify-center gap-2 my-auto text-center">Search Your Recipe <img className="w-8" src="../../public/cook-book.png" /></p>}
+                    {(!fetchingRecipes && fetchedRecipes.length < 1 && !noRecipeFound) && <p className="flex items-center justify-center gap-2 my-auto text-center">Search Your Recipe <img className="w-8" src={img} /></p>}
                     {fetchingRecipes && <p className="flex items-center justify-center gap-2 my-auto text-center">Searching Recipes <ImSpinner8 className="text-red-400 spinner-rotate" /></p>}
-                    {(!fetchingRecipes && noRecipeFound && fetchedRecipes.length < 1) && <p className="flex items-center justify-center gap-2 my-auto text-center">No Recipe Found<img className="w-8" src="../../public/cook-book.png" /></p>}
+                    {(!fetchingRecipes && noRecipeFound && fetchedRecipes.length < 1) && <p className="flex items-center justify-center gap-2 my-auto text-center">No Recipe Found<img className="w-8" src={img} /></p>}
                 </div>
             </div>
         </>
