@@ -29,6 +29,7 @@ function Login() {
       navigate('/main');
       setIsLoading(false);
     }).catch((err) => {
+      setIsLoading(false);
       setError(getFirebaseAuthErrorMessage(err.code));
     });
 
@@ -36,7 +37,10 @@ function Login() {
       setError('');
       navigate('/main');
       setIsLoading(false);
-    }).catch((err) => setError(getFirebaseAuthErrorMessage(err.code)))
+    }).catch((err) => {
+      setIsLoading(false);
+      setError(getFirebaseAuthErrorMessage(err.code))
+    })
 
   }
   const onSubmit = (data) => {

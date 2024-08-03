@@ -68,36 +68,8 @@ function SearchBar() {
     };
 
     return (
-        // <div className="flex items-center justify-center gap-8 mx-auto mt-20 w-1/8">
-        //     <div className="flex flex-row w-[500px] p-2 bg-white border border-gray-300 rounded-full">
-        //         <input
-        //             type="text"
-        //             onChange={(e) => setSearchQuery(e.target.value)}
-        //             placeholder="Search recipes..."
-        //             className="flex-grow p-2 ml-2 text-gray-400 tborder-none bg-inherit placeholder-color focus:outline-none focus:ring-0"
-        //         />
-        //         <Button onClick={handleSearch} className="p-2 px-4 ml-2 text-white bg-red-400 rounded-full hover:opacity-90 hover:bg-red-500">
-        //             Search
-        //         </Button>
-        //     </div>
-        //     <div className="flex items-center justify-center gap-4">
-        //         <Select defaultValue="title" onValueChange={(value) => setFilter(value)}>
-        //             <SelectTrigger className="min-w-[150px] rounded-3xl">
-        //                 <SelectValue placeholder="title" />
-        //             </SelectTrigger>
-        //             <SelectContent className="rounded-xl">
-        //                 <SelectGroup>
-        //                     <SelectItem className="rounded-xl" value="title">Recipe Name</SelectItem>
-        //                     <SelectItem className="rounded-xl" value="ingredients">Ingredients</SelectItem>
-        //                     <SelectItem className="rounded-xl" value="category">Category</SelectItem>
-        //                 </SelectGroup>
-        //             </SelectContent>
-        //         </Select>
-        //         <p className="w-full font-semibold text-center text-red-400">Search Filter</p>
-        //     </div>
-        // </div>
         <div className="flex flex-wrap items-center w-full gap-4 mx-1 mt-20 md:justify-center">
-            <div className="flex flex-row md:min-w-[20%] max-w-[300px] p-2 bg-white border border-gray-300 rounded-full">
+            <div className="flex flex-row md:min-w-[20%] max-w-[270px] p-2 bg-white border border-gray-300 rounded-full">
                 <input
                     type="text"
                     onChange={(e) => setSearchQuery(e.target.value)}
