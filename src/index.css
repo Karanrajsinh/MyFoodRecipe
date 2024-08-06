@@ -20,11 +20,28 @@ body{
   }
 }
 
+@media (max-width: 550px) {
+  .toast {
+    font-size: 0.8rem;
+  }
+}
+
 .spinner-rotate {
   display: inline-block; 
   animation: rotate 2s linear infinite; 
 }
 
+body {
+  font-family: "Fira Sans", sans-serif;
+}
+
+.spectral-sc {
+  font-family: "Spectral SC", serif;
+}
+
+.frank-ruhl-libre {
+  font-family: "Frank Ruhl Libre", serif;
+}
 
 
 @layer utilities

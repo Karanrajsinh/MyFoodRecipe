@@ -53,7 +53,7 @@ function Recipe({ recipe }) {
     //   </div>
     // </Link>
     <Link to={`/main/recipe/${recipe.id}`}>
-      <div className="bg-[#ffb9b9] bg-opacity-50 text-[#a75858] hover:bg-opacity-80 flex items-center justify-center px-1 py-3 mx-auto mb-4 border border-gray-300 rounded-2xl md:rounded-3xl shadow-md w-full max-w-[50em] gap-4 md:p-4">
+      <div className="bg-[#ffb9b9] frank-ruhl-libre bg-opacity-50 fira-sans text-[#a75858] hover:bg-opacity-80 flex items-center justify-center px-1 py-3 mx-auto  border border-gray-300 rounded-2xl md:rounded-3xl shadow-md w-full max-w-[50em] gap-4 md:p-4">
         <img
           src={filteredRecipe?.photoUrl}
           alt={filteredRecipe?.title}
@@ -61,7 +61,7 @@ function Recipe({ recipe }) {
         />
         <div className="flex-grow md:ml-4">
           {isAuthor && <FaUserCircle className="relative float-right text-sm md:text-xl top-2 right-4" />}
-          <h2 className="mb-1 text-sm font-bold md:text-xl">{filteredRecipe?.title}</h2>
+          <h2 className="mb-1 text-sm font-bold spectral-sc md:text-lg">{filteredRecipe?.title}</h2>
           <p className="mb-1 text-xs italic md:text-base"><span className='mr-1 not-italic font-semibold'>Author:</span>{filteredRecipe?.author}</p>
           <div className="flex w-full mb-1 text-xs flext md:text-base ">
             <span className='mr-1 not-italic font-semibold'>Ingredients:</span>

@@ -80,7 +80,7 @@ function AddRecipe() {
               type="text"
               placeholder="Title"
               {...register('title', { required: 'Title is required' })}
-              className="w-full p-2 mb-1 border border-gray-400 rounded-lg focus:border-red-400 focus:outline-none"
+              className="w-full p-2 mb-1 border border-gray-400 rounded-lg disabled:bg-red-100 disabled:cursor-not-allowed focus:border-red-400 focus:outline-none"
             />
             {errors.title && <p className="text-red-500 ">{errors.title.message}</p>}
 
@@ -94,7 +94,7 @@ function AddRecipe() {
                   message: 'Photo URL must start with "https://"',
                 },
               })}
-              className="w-full p-2 mt-8 border border-gray-400 rounded-lg focus:border-red-400 focus:outline-none"
+              className="w-full p-2 mt-8 border border-gray-400 rounded-lg disabled:bg-red-100 disabled:cursor-not-allowed focus:border-red-400 focus:outline-none"
             />
             {errors.photoUrl && <p className="text-red-500 ">{errors.photoUrl.message}</p>}
             <input
@@ -102,7 +102,7 @@ function AddRecipe() {
               type="number"
               placeholder="Servings"
               {...register('servings', { required: 'Servings is required' })}
-              className="w-full p-2 mt-8 border border-gray-400 rounded-lg focus:border-red-400 focus:outline-none"
+              className="w-full p-2 mt-8 border border-gray-400 rounded-lg disabled:bg-red-100 disabled:cursor-not-allowed focus:border-red-400 focus:outline-none"
             />
             {errors.servings && <p className="text-red-500 ">{errors.servings.message}</p>}
             <input
@@ -110,7 +110,7 @@ function AddRecipe() {
               type="text"
               placeholder="Category"
               {...register('category', { required: 'Category is required' })}
-              className="z-10 w-full p-2 mt-8 border border-gray-400 rounded-lg focus:border-red-400 focus:outline-none"
+              className="z-10 w-full p-2 mt-8 border border-gray-400 rounded-lg disabled:bg-red-100 disabled:cursor-not-allowed focus:border-red-400 focus:outline-none"
             />
             {errors.category && <p className="text-red-500 ">{errors.category.message}</p>}
             <div className="flex mt-8">
@@ -119,7 +119,7 @@ function AddRecipe() {
                 type="number"
                 placeholder="Prep Time"
                 {...register('prepTime.time', { required: 'Prep Time is required', min: { value: 1, message: 'Must be  greater than 0' } })}
-                className="w-full p-2 border border-gray-400 rounded-lg focus:border-red-400 focus:outline-none"
+                className="w-full p-2 border border-gray-400 rounded-lg disabled:bg-red-100 disabled:cursor-not-allowed focus:border-red-400 focus:outline-none"
               />
               <Controller
                 name={`prepTime.unit`}
@@ -132,10 +132,10 @@ function AddRecipe() {
                       setValue(`prepTime.unit`, value);
                     }}
                   >
-                    <SelectTrigger className=" text-xs md:text-sm w-[100px] ml-2">
+                    <SelectTrigger className=" text-xs text-slate-500 md:text-sm w-[100px] ml-2">
                       <SelectValue placeholder="min" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className='text-slate-500'>
                       <SelectGroup>
                         <SelectItem value="min">Min</SelectItem>
                         <SelectItem value="hour">Hour</SelectItem>
@@ -152,7 +152,7 @@ function AddRecipe() {
                 type="number"
                 placeholder="Cook Time"
                 {...register('cookTime.time', { required: 'Cook Time is required', min: { value: 1, message: 'Must be  greater than 0' } })}
-                className="w-full p-2 border border-gray-400 rounded-lg focus:border-red-400 focus:outline-none"
+                className="w-full p-2 border border-gray-400 rounded-lg disabled:bg-red-100 disabled:cursor-not-allowed focus:border-red-400 focus:outline-none"
               />
               <Controller
                 name={`cookTime.unit`}
@@ -165,10 +165,10 @@ function AddRecipe() {
                       setValue(`cookTime.unit`, value);
                     }}
                   >
-                    <SelectTrigger className=" text-xs md:text-sm w-[100px] ml-2">
+                    <SelectTrigger className=" text-xs text-slate-500 md:text-sm w-[100px] ml-2">
                       <SelectValue placeholder="min" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className='text-slate-500'>
                       <SelectGroup>
                         <SelectItem value="min">Min</SelectItem>
                         <SelectItem value="hour">Hour</SelectItem>
@@ -193,14 +193,14 @@ function AddRecipe() {
                       type="text"
                       placeholder="Name"
                       {...register(`ingredients.${index}.name`, { required: 'Name is required' })}
-                      className="w-1/2 p-2 border border-gray-400 rounded-lg focus:border-red-400 focus:outline-none"
+                      className="w-1/2 p-2 border border-gray-400 rounded-lg disabled:bg-red-100 disabled:cursor-not-allowed focus:border-red-400 focus:outline-none"
                     />
                     <input
                       disabled={isLoading}
                       type="number"
                       placeholder="Quantity"
                       {...register(`ingredients.${index}.quantity`, { required: 'Quantity is required', min: { value: 1, message: 'Must be  greater than 0' } })}
-                      className="w-1/2 p-2 ml-2 border border-gray-400 rounded-lg focus:border-red-400 focus:outline-none"
+                      className="w-1/2 p-2 ml-2 border border-gray-400 rounded-lg disabled:bg-red-100 disabled:cursor-not-allowed focus:border-red-400 focus:outline-none"
                     />
                     <Controller
                       name={`ingredients.${index}.unit`}
@@ -213,10 +213,10 @@ function AddRecipe() {
                             setValue(`ingredients.${index}.unit`, value);
                           }}
                         >
-                          <SelectTrigger className=" w-[150px] z-10 text-xs md:text-sm md:w-[250px] ml-2">
+                          <SelectTrigger className=" w-[150px] z-10 text-slate-500 text-xs md:text-sm md:w-[250px] ml-2">
                             <SelectValue placeholder="Unit" />
                           </SelectTrigger>
-                          <SelectContent>
+                          <SelectContent className='text-slate-500'>
                             <SelectGroup>
                               <SelectItem value="g">Gram (g)</SelectItem>
                               <SelectItem value="kg">Kilogram (kg)</SelectItem>
@@ -245,7 +245,7 @@ function AddRecipe() {
                 ))}
                 <button
                   type="button"
-                  className="p-2 mt-2 text-xs text-white bg-red-400 rounded-lg"
+                  className="p-2 mt-2 text-xs text-white bg-red-400 rounded-lg md:text-sm"
                   onClick={() => addIngredient({ name: '', quantity: '' })}
                 >
                   Add Ingredient
@@ -263,7 +263,7 @@ function AddRecipe() {
                       disabled={isLoading}
                       placeholder="Step Description"
                       {...register(`steps.${index}.description`, { required: 'Step description is required' })}
-                      className="w-full p-2 border border-gray-400 rounded-lg focus:border-red-400 focus:outline-none"
+                      className="w-full p-2 border border-gray-400 rounded-lg disabled:bg-red-100 disabled:cursor-not-allowed focus:border-red-400 focus:outline-none"
                       rows="2"
                     />
                     {stepFields.length > 1 && (
@@ -279,7 +279,7 @@ function AddRecipe() {
                 ))}
                 <button
                   type="button"
-                  className="p-2 mt-2 text-xs text-white bg-red-400 rounded-lg"
+                  className="p-2 mt-2 text-xs text-white bg-red-400 rounded-lg md:text-sm"
                   onClick={() => addStep({ description: '' })}
                 >
                   Add Step

@@ -82,28 +82,28 @@ const RecipeDetail = () => {
     <>
       {
         loading ? (
-          <p className='flex items-center justify-center my-[80%]  md:m-[20%] text-center text-sm md:text-lg gap-2 text-slate-500'>Loading Recipe<ImSpinner8 className='text-red-400 spinner-rotate' /></p>
+          <p className='flex items-center justify-center my-[80%] md:m-[20%] text-center text-sm md:text-lg gap-2 text-slate-500'>Loading Recipe<ImSpinner8 className='text-red-400 spinner-rotate' /></p>
         ) : (
           <>
-            <div className=" flex flex-col w-full  md:mt-16 md:w-[70%] md:min-h-screen mx-auto">
-              <div className="relative h-40 bg-black md:rounded-2xl md:h-80">
+            <div className=" flex flex-col w-full md:mt-8 md:w-[50%] md:min-h-screen mx-auto">
+              <div className="relative bg-black shadow-lg h-44 md:rounded-3xl md:h-60">
                 <img
                   src={formatedRecipeData?.photoUrl}
                   alt={formatedRecipeData?.title}
-                  className="object-cover w-full h-40 md:h-80 md:rounded-2xl opacity-70"
+                  className="object-cover w-full shadow-md h-44 md:h-60 md:rounded-3xl opacity-70"
                 />
-                <div className="absolute top-0 left-0 flex items-center justify-center w-full h-40 bg-red-500 bg-opacity-40 md:h-80 md:rounded-2xl">
-                  <h1 className="text-2xl font-bold text-red-100 md:text-4xl">{formatedRecipeData?.title}</h1>
+                <div className="absolute top-0 left-0 flex items-center justify-center w-full bg-red-500 h-44 bg-opacity-40 md:h-60 md:rounded-3xl">
+                  <h1 className="text-2xl font-bold text-red-100 spectral-sc md:text-4xl">{formatedRecipeData?.title}</h1>
                 </div>
               </div>
-              <div className="text-sm md:text-base relative z-10 p-6 md:p-8 mx-auto -mt-8 md:-mt-16 bg-[#f3cfcf] text-[#993b3b] border border-red-300 rounded-3xl shadow-md min-w-[24em] max-w-[25em] md:max-w-[50em]">
-                <div className="flex items-start justify-between mb-4">
+              <div className="text-sm md:text-base relative  p-6 md:p-8 mx-auto  text-[#993b3b] min-w-[100%] max-w-[25em] md:min-w-[80%] md:max-w-[70em]">
+                <div className="flex items-start justify-between mb-8">
                   <div>
-                    <p className="mb-1 italic"><strong>Author:</strong> {formatedRecipeData?.author}</p>
-                    <p className="mb-1"><strong>Category:</strong> {formatedRecipeData?.category}</p>
-                    <p className="mb-1"><strong>Servings:</strong> {formatedRecipeData?.servings}</p>
-                    <p className="mb-1"><strong>Preparation:</strong>{` ${formatedRecipeData?.prepTime?.time} ${formatedRecipeData?.prepTime?.unit}`}</p>
-                    <p className="mb-1"><strong>Cooking:</strong>{` ${formatedRecipeData?.cookTime?.time} ${formatedRecipeData?.cookTime?.unit}`}</p>
+                    <p className="mb-1 italic"><span className='font-semibold'>Author:</span> {formatedRecipeData?.author}</p>
+                    <p className="mb-1"><span className='font-semibold'>Category:</span> {formatedRecipeData?.category}</p>
+                    <p className="mb-1"><span className='font-semibold'>Servings:</span> {formatedRecipeData?.servings}</p>
+                    <p className="mb-1"><span className='font-semibold'>Preparation:</span>{` ${formatedRecipeData?.prepTime?.time} ${formatedRecipeData?.prepTime?.unit}`}</p>
+                    <p className="mb-1"><span className='font-semibold'>Cooking:</span>{` ${formatedRecipeData?.cookTime?.time} ${formatedRecipeData?.cookTime?.unit}`}</p>
                   </div>
                   <div className='flex flex-col items-center justify-center gap-2'>
                     <button className="ml-1 text-red-500 disabled:cursor-not-allowed" onClick={saveRecipe} disabled={isSaving}>
@@ -120,9 +120,9 @@ const RecipeDetail = () => {
                     {isSaving && <ImSpinner8 className='mx-auto text-sm md:text-xl spinner-rotate' />}
                   </div>
                 </div>
-                <div className="mb-4">
-                  <h3 className="mb-2 text-lg font-semibold md:text-2xl">Ingredients:</h3>
-                  <ul className="pl-5 mb-4 overflow-y-scroll list-disc max-h-20 custom-scrollbar">
+                <div className="mb-6">
+                  <h3 className="mb-2 text-lg font-semibold frank-ruhl-libre md:text-2xl">Ingredients</h3>
+                  <ul className="pl-5 mb-4 list-disc">
                     {formatedRecipeData?.ingredients.map((ingredient, index) => (
                       <li key={index} className="mb-1">
                         {ingredient.name} {`(${ingredient.quantity}${ingredient.unit === " " ? "" : ingredient.unit})`}
@@ -131,15 +131,15 @@ const RecipeDetail = () => {
                   </ul>
                 </div>
                 <div>
-                  <h3 className="mb-2 text-lg font-semibold md:text-2xl">Steps:</h3>
-                  <ol className="pl-5 overflow-y-scroll list-decimal max-h-40 custom-scrollbar">
+                  <h3 className="mb-2 text-lg font-semibold frank-ruhl-libre md:text-2xl">Steps</h3>
+                  <ol className="pl-5 list-decimal">
                     {formatedRecipeData?.steps.map((step, index) => (
                       <li key={index} className="mb-3">{step.description}</li>
                     ))}
                   </ol>
                 </div>
               </div>
-              <Button className="flex text-sm mt-6 items-center justify-center w-[8em] mx-auto text-center bg-red-400 md:px-8 md:py-6 md:text-2xl rounded-3xl hover:bg-opacity-90 hover:bg-red-400" onClick={() => navigate(-1)}><FaArrowLeftLong /><span className='flex ml-2 md:mb-1'>Back</span></Button>
+              <Button className="flex items-center justify-center px-6 mx-auto mt-2 mb-4 text-sm text-center bg-red-400 md:my-6 w-min md:px-6 md:py-6 md:text-lg rounded-3xl hover:bg-opacity-90 hover:bg-red-400" onClick={() => navigate(-1)}><FaArrowLeftLong className='text-sm' /><span className='flex ml-2 md:mt-1 md:mb-1'>Back</span></Button>
             </div>
           </>
         )

@@ -68,32 +68,31 @@ function SearchBar() {
     };
 
     return (
-        <div className="flex flex-wrap items-center w-full gap-4 mx-1 mt-20 md:justify-center">
-            <div className="flex flex-row md:min-w-[20%] max-w-[270px] p-2 bg-white border border-gray-300 rounded-full">
+        <div className="flex flex-wrap items-center justify-center w-[95%] gap-4 mx-auto mt-20">
+            <div className="flex flex-row p-2 bg-white border border-gray-300 rounded-full md:min-w-[40%]">
+                <div className="gap-4">
+                    <Select defaultValue="title" onValueChange={(value) => setFilter(value)}>
+                        <SelectTrigger className=" text-xs md:text-sm w-[110px] border-none md:min-w-[150px]">
+                            <SelectValue placeholder="title" />
+                        </SelectTrigger>
+                        <SelectContent className="rounded-xl">
+                            <SelectGroup>
+                                <SelectItem className="text-xs md:text-sm rounded-xl" value="title">Recipe</SelectItem>
+                                <SelectItem className="text-xs md:text-sm rounded-xl" value="ingredients">Ingredients</SelectItem>
+                                <SelectItem className="text-xs md:text-sm rounded-xl" value="category">Category</SelectItem>
+                            </SelectGroup>
+                        </SelectContent>
+                    </Select>
+                </div>
                 <input
                     type="text"
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Search recipes..."
-                    className="flex-grow w-1/2 p-2 ml-2 text-gray-400 border-none md:w-full md:flex-grow bg-inherit placeholder-color focus:outline-none focus:ring-0"
+                    className="flex-grow w-[50%]  p-2 ml-2 text-sm  text-gray-400 border-none bg-inherit placeholder-color focus:outline-none focus:ring-0"
                 />
-                <Button onClick={handleSearch} className="px-2 ml-2 text-xs text-white bg-red-400 rounded-full md:text-sm hover:opacity-90 hover:bg-red-500">
+                <Button onClick={handleSearch} className="w-24 px-2 ml-2 text-xs text-white bg-red-400 rounded-full md:text-sm hover:opacity-90 hover:bg-red-500">
                     Search
                 </Button>
-            </div>
-            <div className="flex items-center justify-center gap-4">
-                <Select defaultValue="title" onValueChange={(value) => setFilter(value)}>
-                    <SelectTrigger className=" text-xs md:text-sm w-[80px] md:min-w-[150px] rounded-3xl">
-                        <SelectValue placeholder="title" />
-                    </SelectTrigger>
-                    <SelectContent className="rounded-xl">
-                        <SelectGroup>
-                            <SelectItem className="text-xs md:text-sm rounded-xl" value="title">Recipe Name</SelectItem>
-                            <SelectItem className="text-xs md:text-sm rounded-xl" value="ingredients">Ingredients</SelectItem>
-                            <SelectItem className="text-xs md:text-sm rounded-xl" value="category">Category</SelectItem>
-                        </SelectGroup>
-                    </SelectContent>
-                </Select>
-                <p className="hidden font-semibold text-center text-red-400 md:block">Search Filter</p>
             </div>
         </div>
     )
