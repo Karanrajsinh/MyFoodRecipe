@@ -28,17 +28,25 @@ function Navbar() {
           </Link>
         </div>
         <div className="hidden space-x-2 text-xs md:flex sm:space-x-4 sm:text-base">
-          <Link onClick={closeMenu} to="/main/add-recipe" className="flex items-center justify-center gap-2 px-2 py-1 hover:text-white sm:px-4 sm:py-1">
-            <span>Add Recipe</span>
-            <img className="w-6" src={recipeImg} alt="" />
+          <Link
+            onClick={closeMenu}
+            to="/main/add-recipe"
+            className="relative flex items-center justify-center gap-3 px-2 py-1 hover:text-white sm:px-4 sm:py-1"
+          >
+            <img className="w-5" src={recipeImg} alt="" />
+            <span className="relative underline-hover">Add Recipe</span>
           </Link>
-          <Link onClick={closeMenu} to="/main/my-recipes" className="flex items-center justify-center gap-2 px-2 py-1 hover:text-white sm:px-4 sm:py-1">
-            <span>Recipes</span>
-            <img className="w-8" src={recipeList} alt="" />
+          <Link
+            onClick={closeMenu}
+            to="/main/my-recipes"
+            className="relative flex items-center justify-center gap-2 px-2 py-1 hover:text-white sm:px-4 sm:py-1"
+          >
+            <img className="w-6" src={recipeList} alt="" />
+            <span className="relative underline-hover">Recipes</span>
           </Link>
           <button
             onClick={() => signOut(auth)}
-            className="flex items-center justify-center gap-2 px-6 py-1 text-red-500 bg-white rounded-xl hover:opacity-80 sm:px-4 sm:py-1"
+            className="relative flex items-center justify-center gap-2 px-6 py-1 text-red-500 bg-white rounded-xl hover:opacity-80 sm:px-4 sm:py-1"
           >
             <span>Logout</span>
             <IoLogOutOutline />
@@ -47,28 +55,25 @@ function Navbar() {
 
         {/* Hamburger Menu */}
         <div className="flex items-center md:hidden">
-          <button
-            className="text-white focus:outline-none"
-            onClick={toggleMenu}
-          >
-
+          <button className="text-white focus:outline-none" onClick={toggleMenu}>
             <div className="relative flex flex-col items-center justify-center w-8 h-8">
               <span
-                className={`block h-0.5 mb-1.5 w-full bg-current transform transition duration-300 ease-in-out ${isOpen ? "rotate-45 translate-y-2" : ""
+                className={`block h-0.5 mb-1.5 w-full bg-current transform transition duration-300 ease-in-out ${isOpen ? 'rotate-45 translate-y-2' : ''
                   }`}
               ></span>
               <span
-                className={`block h-0.5  mb-1.5 w-full bg-current transition duration-300 ease-in-out ${isOpen ? "opacity-0" : ""
+                className={`block h-0.5  mb-1.5 w-full bg-current transition duration-300 ease-in-out ${isOpen ? 'opacity-0' : ''
                   }`}
               ></span>
               <span
-                className={`block h-0.5 w-full bg-current transform transition duration-300 ease-in-out ${isOpen ? "-rotate-45 -translate-y-2" : ""
+                className={`block h-0.5 w-full bg-current transform transition duration-300 ease-in-out ${isOpen ? '-rotate-45 -translate-y-2' : ''
                   }`}
               ></span>
             </div>
           </button>
         </div>
       </div>
+
 
       {/* Overlay */}
       <div
@@ -82,33 +87,40 @@ function Navbar() {
         className={`fixed top-0 left-0 h-full bg-[#f48982] w-64 z-50 transform ${isOpen ? "translate-x-0" : "-translate-x-full"
           } transition-transform duration-300 ease-in-out`}
       >
-        <div className="flex items-center justify-center mt-24 space-x-2 text-xl font-bold sm:text-xl">
+        <div className="flex items-center justify-center py-2 mt-24 space-x-2 text-xl font-bold border-b-2 border-white sm:text-xl">
           <Link onClick={closeMenu} to="/main" className="flex items-center">
             <p>MyFoodRecipes</p>
             <img className="w-6 ml-2 md:w-8" src={img} alt="Logo" />
           </Link>
         </div>
-        <div className="flex flex-col items-center justify-center px-4 my-[90%] space-y-4">
-          <Link onClick={closeMenu} to="/main/add-recipe" className="flex items-center justify-center gap-2 px-2 py-1 hover:text-white sm:px-4 sm:py-1">
+        <div className="flex flex-col items-center justify-center gap-8 px-4 my-[90%]">
+          <Link onClick={closeMenu} to="/main/add-recipe" className="flex items-center justify-center w-full gap-2 px-2 py-0 text-center hover:text-white sm:px-4 sm:py-2">
             <span>Add Recipe</span>
             <img className="w-6" src={recipeImg} alt="" />
           </Link>
-          <Link onClick={closeMenu} to="/main/my-recipes" className="flex items-center justify-center gap-2 px-2 py-1 hover:text-white sm:px-4 sm:py-1">
+
+          {/* <div className="w-[114%] border-t border-white"></div> Divider */}
+
+          <Link onClick={closeMenu} to="/main/my-recipes" className="flex items-center justify-center w-full gap-2 px-2 py-0 text-center hover:text-white sm:px-4 sm:py-2">
             <span>Recipes</span>
             <img className="w-8" src={recipeList} alt="" />
           </Link>
+
+          {/* <div className="w-[114%] border-t border-white"></div> Divider */}
+
           <button
             onClick={() => {
               closeMenu();
               signOut(auth);
             }}
-            className="flex items-center justify-center w-full gap-2 px-3 py-1 text-red-500 bg-white rounded-xl hover:opacity-80 sm:px-4 sm:py-1"
+            className="absolute  flex items-center justify-center w-[80%] gap-2 px-3 py-2 text-red-500 bg-white bottom-5 rounded-xl hover:opacity-80 sm:px-4 sm:py-2"
           >
             Logout
             <IoLogOutOutline />
           </button>
         </div>
       </div>
+
     </nav>
   )
 }

@@ -1,4 +1,3 @@
-import Recipe from "@/app_components/Recipe";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/app_components/ModifiedTab";
 import { useUserAuth } from "@/context/UserAuth";
 import { useState } from "react";
@@ -7,9 +6,8 @@ import { ImSpinner8 } from "react-icons/im";
 import { useQuery } from "@tanstack/react-query";
 import img from '../../public/recipe-book.png'
 import RecipesList from "@/app_components/RecipesList";
+
 function RecipePage() {
-    // const [recipesData, setRecipesData] = useState([]);
-    // const [savedRecipesData, setSavedRecipesData] = useState([]);
     const { uid } = useUserAuth();
     const [tab, setTab] = useState('recipes');
 
@@ -23,16 +21,7 @@ function RecipePage() {
             }
         },
     })
-    // useEffect(() => {
 
-    //     if (tab === 'recipes') getUserRecipes(uid).then((data) => {
-    //         setRecipesData(data);
-    //     })
-    //     if (tab === 'bookmarked') getUserSavedRecipes(uid).then((data) => {
-    //         setSavedRecipesData(data)
-    //     }) /* eslint-disable */
-    // }, [tab]);
-    // /* eslint-ensable */
 
     return (
         <div className="flex flex-col items-center w-full h-[80vh] mt-14  md:mt-20">
@@ -53,12 +42,7 @@ function RecipePage() {
 
                 <TabsContent value="bookmarked" className="h-10 p-4">
                     {!isLoading ? (
-                        data.map((recipe) => (
-                            <Recipe
-                                key={recipe.id}
-                                recipe={recipe}
-                            />
-                        ))
+                        <RecipesList recipes={data} />
                     ) : (
                         <p className="flex text-sm md:text-lg items-center justify-center my-[60%] md:my-[35%] gap-3"><ImSpinner8 className="text-red-400 spinner-rotate" /><span className="text-slate-600">Loading recipes...</span></p>
                     )}

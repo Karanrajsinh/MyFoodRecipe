@@ -1,6 +1,6 @@
 import { db } from "../../firebase.config";
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { addDoc, arrayRemove, arrayUnion, collection, doc, getDoc, getDocs, query, setDoc, updateDoc, where } from "firebase/firestore";
+import { addDoc, arrayRemove, arrayUnion, collection, deleteDoc, doc, getDoc, getDocs, query, setDoc, updateDoc, where } from "firebase/firestore";
 
 
 
@@ -27,13 +27,26 @@ async function loginUser(email, password) {
     return res;
 }
 
-async function addRecipe(uid, data, name) {
-    const userRef = doc(db, `/users/${uid}`);
+async function addRecipe(userId, data, name) {
+    const userRef = doc(db, `/users/${userId}`);
     const recipe = await addDoc(recipesCollection, { ...data, author: name })
     const recipeRef = doc(db, `recipes/${recipe.id}`);
     updateDoc(recipeRef, { id: recipe.id });
     updateDoc(userRef, { recipes: arrayUnion(recipeRef) })
+}
 
+
+async function updateRecipe(recipeId, data) {
+    const recipeRef = doc(db, `recipes/${recipeId}`);
+    updateDoc(recipeRef, data);
+}
+
+
+async function deleteRecipe(userId, recipeId) {
+    const userRef = doc(db, `/users/${userId}`);
+    const recipeRef = doc(db, `recipes/${recipeId}`);
+    deleteDoc(recipeRef);
+    updateDoc(userRef, { recipes: arrayRemove(recipeRef) })
 }
 
 async function getRecipe(id) {
@@ -119,4 +132,4 @@ async function getUserRecipes(uid) {
 
 }
 
-export { createUser, loginUser, addRecipe, getRecipe, checkIsOwner, checkSavedRecipe, addSavedRecipe, removeSavedRecipe, getUserRecipes, getUserSavedRecipes }
+export { createUser, loginUser, addRecipe, updateRecipe, deleteRecipe, getRecipe, checkIsOwner, checkSavedRecipe, addSavedRecipe, removeSavedRecipe, getUserRecipes, getUserSavedRecipes }

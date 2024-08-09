@@ -68,7 +68,7 @@ function Login() {
                 className="w-full p-2 text-sm border rounded-lg focus:border-red-400 focus:outline-none lg:text-base"
                 {...register('name', { required: 'Name is required' })}
               />
-              {errors.name && <p className="text-red-500">{errors.name.message}</p>}
+              {errors.name && <p className="mt-1 text-xs text-red-500 md:text-base">{errors.name.message}</p>}
             </div>
           )}
           <div className="mb-4">
@@ -85,7 +85,7 @@ function Login() {
                 }
               })}
             />
-            {errors.email && <p className="text-red-500">{errors.email.message}</p>}
+            {errors.email && <p className="mt-1 text-xs text-red-500 md:text-base">{errors.email.message}</p>}
           </div>
           <div className="mb-4">
             <input
@@ -93,10 +93,10 @@ function Login() {
               type="password"
               placeholder="Password"
               autoComplete="password"
-              className="w-full p-2 text-sm border rounded-lg focus:border-red-400 focus:outline-none lg:text-base"
+              className="w-full p-2 text-sm border rounded-lg disabled:cursor-not-allowed focus:border-red-400 focus:outline-none lg:text-base"
               {...register('password', { required: 'Password is required' })}
             />
-            {errors.password && <p className="text-red-500">{errors.password.message}</p>}
+            {errors.password && <p className="mt-1 text-xs text-red-500 md:text-base">{errors.password.message}</p>}
           </div>
           {error !== '' && <p className="mb-2 text-red-500">{error}</p>}
           <button

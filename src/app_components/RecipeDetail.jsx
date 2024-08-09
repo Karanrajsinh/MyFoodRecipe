@@ -1,15 +1,16 @@
 import { Button } from '@/components/ui/button';
 import { useEffect, useState } from 'react';
-import { FaBookmark } from 'react-icons/fa';
+import { FaBookmark, FaEdit } from 'react-icons/fa';
 import { ImSpinner8 } from "react-icons/im";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { FiBookmark } from 'react-icons/fi';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useUserAuth } from '@/context/UserAuth';
 import toast from 'react-hot-toast';
 import { capitalizeText } from '@/utils/uitls';
-import { addSavedRecipe, checkIsOwner, checkSavedRecipe, getRecipe, removeSavedRecipe } from '@/utils/firebase';
+import { addSavedRecipe, checkIsOwner, checkSavedRecipe, deleteRecipe, getRecipe, removeSavedRecipe } from '@/utils/firebase';
 import { useQueryClient } from '@tanstack/react-query';
+import { MdDelete } from 'react-icons/md';
 
 const RecipeDetail = () => {
 
@@ -19,29 +20,79 @@ const RecipeDetail = () => {
   const [isAuthor, setIsAuthor] = useState();
   const [recipeData, setRecipeData] = useState();
   const [loading, setLoading] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+
+
   const query = useQueryClient();
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
+  // useEffect(() => {
+  //   setLoading(true);
+
+  //   checkIsOwner(uid, id).then((res) => {
+  //     if (res.empty) setIsAuthor(false);
+  //     else setIsAuthor(true);
+  //   })
+
+  //   checkSavedRecipe(uid, id).then((res) => {
+  //     if (!res.empty) setIsBookmarked(true);
+  //   })
+
+  //   getRecipe(id).then((res) => {
+  //     if (!res.exists()) navigate('/main/my-recipes');
+  //     setRecipeData(res.data());
+  //   })
+
+
+  //   /* eslint-disable */
+  // }, [])
+  // /* eslint-ensable */
+
+
   useEffect(() => {
-    setLoading(true);
+    const checkData = async () => {
+      setLoading(true);
+      try {
+        const [ownerRes, savedRecipeRes, recipeRes] = await Promise.all([
+          checkIsOwner(uid, id),
+          checkSavedRecipe(uid, id),
+          getRecipe(id)
+        ]);
 
-    checkIsOwner(uid, id).then((res) => {
-      if (res.empty) setIsAuthor(false);
-      else setIsAuthor(true);
-    })
+        // Handle checkIsOwner result
+        if (ownerRes.empty) {
+          setIsAuthor(false);
+        } else {
+          setIsAuthor(true);
+        }
 
-    checkSavedRecipe(uid, id).then((res) => {
-      if (!res.empty) setIsBookmarked(true);
-    })
+        // Handle checkSavedRecipe result
+        if (!savedRecipeRes.empty) {
+          setIsBookmarked(true);
+        }
 
-    getRecipe(id).then((res) => {
-      setRecipeData(res.data());
-      setLoading(false);
-    })
-    /* eslint-disable */
-  }, [])
+        // Handle getRecipe result
+        if (!recipeRes.exists()) {
+          navigate('/main/my-recipes');
+        } else {
+          setRecipeData(recipeRes.data());
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        // Handle errors here if needed
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  /* eslint-ensable */
+    checkData()
+  }, [uid, id, navigate]);
 
   let formatedRecipeData;
 
@@ -49,9 +100,21 @@ const RecipeDetail = () => {
     formatedRecipeData = {
       ...recipeData,
       title: capitalizeText(recipeData?.title),
-      category: capitalizeText(recipeData?.category),
+      categories: recipeData?.categories.map((category) => (capitalizeText(category))),
       ingredients: recipeData?.ingredients.map(ing => ({ ...ing, name: capitalizeText(ing.name) })),
     }
+  }
+
+
+  const handleDelete = () => {
+    setIsDeleting(true);
+    deleteRecipe(uid, id).then(() => {
+      query.invalidateQueries({ queryKey: ["recipes", "recipes"] }).then(() => {
+        toast.success('Recipe Deleted');
+        setIsDeleting(false);
+        navigate('/main/my-recipes');
+      })
+    })
   }
 
   const saveRecipe = () => {
@@ -60,19 +123,21 @@ const RecipeDetail = () => {
 
     if (!isBookmarked) {
       addSavedRecipe(uid, id).then(() => {
-        query.invalidateQueries({ queryKey: ["recipes", "bookmarked"] })
-        toast.success('Recipe Saved')
-        setIsBookmarked(true);
-        setIsSaving(false);
+        query.invalidateQueries({ queryKey: ["recipes", "bookmarked"] }).then(() => {
+          toast.success('Recipe Saved')
+          setIsBookmarked(true);
+          setIsSaving(false);
+        })
       })
     }
 
     if (isBookmarked) {
       removeSavedRecipe(uid, id).then(() => {
-        query.invalidateQueries({ queryKey: ["recipes", "bookmarked"] })
-        toast.success('Recipe Unsaved')
-        setIsBookmarked(false);
-        setIsSaving(false);
+        query.invalidateQueries({ queryKey: ["recipes", "bookmarked"] }).then(() => {
+          toast.success('Recipe Unsaved')
+          setIsBookmarked(false);
+          setIsSaving(false);
+        })
       })
     }
   };
@@ -100,7 +165,7 @@ const RecipeDetail = () => {
                 <div className="flex items-start justify-between mb-8">
                   <div>
                     <p className="mb-1 italic"><span className='font-semibold'>Author:</span> {formatedRecipeData?.author}</p>
-                    <p className="mb-1"><span className='font-semibold'>Category:</span> {formatedRecipeData?.category}</p>
+                    <div className="flex gap-1 mb-1"><span className='font-semibold'>Category:</span> <p> {formatedRecipeData?.categories.map((category, index) => <span className='mr-1' key={index}>{category}{index === formatedRecipeData?.categories.length - 1 ? '' : ","}</span>)}</p></div>
                     <p className="mb-1"><span className='font-semibold'>Servings:</span> {formatedRecipeData?.servings}</p>
                     <p className="mb-1"><span className='font-semibold'>Preparation:</span>{` ${formatedRecipeData?.prepTime?.time} ${formatedRecipeData?.prepTime?.unit}`}</p>
                     <p className="mb-1"><span className='font-semibold'>Cooking:</span>{` ${formatedRecipeData?.cookTime?.time} ${formatedRecipeData?.cookTime?.unit}`}</p>
@@ -118,6 +183,20 @@ const RecipeDetail = () => {
                       )}
                     </button>
                     {isSaving && <ImSpinner8 className='mx-auto text-sm md:text-xl spinner-rotate' />}
+                    <div className='flex flex-col items-center justify-center gap-3'>
+                      {isAuthor &&
+                        <>
+                          <button>
+                            <Link to={`/main/recipe-edit/${id}`}>
+                              <FaEdit className='text-xl' />
+                            </Link>
+                          </button>
+                          <button onClick={() => setModalOpen(true)}>
+                            <MdDelete className='mr-1.5 text-2xl' />
+                          </button>
+                        </>
+                      }
+                    </div>
                   </div>
                 </div>
                 <div className="mb-6">
@@ -141,8 +220,32 @@ const RecipeDetail = () => {
               </div>
               <Button className="flex items-center justify-center px-6 mx-auto mt-2 mb-4 text-sm text-center bg-red-400 md:my-6 w-min md:px-6 md:py-6 md:text-lg rounded-3xl hover:bg-opacity-90 hover:bg-red-400" onClick={() => navigate(-1)}><FaArrowLeftLong className='text-sm' /><span className='flex ml-2 md:mt-1 md:mb-1'>Back</span></Button>
             </div>
+
           </>
         )
+      }
+      {modalOpen &&
+        <>
+          <div id='overlay' className="fixed inset-0 z-50 min-h-screen bg-gray-800 bg-opacity-50 backdrop-blur-sm">
+
+            <div id='modal' className="absolute inset-0 z-50 flex items-center justify-center">
+              <div className="bg-red-100  text-[#993b3b] p-8 rounded-lg shadow-lg relative w-full max-w-sm md:w-[40em] md:max-w-[40em]">
+                <button className="absolute text-gray-500 top-3 right-3 hover:text-gray-700" onClick={closeModal}>
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+                  </svg>
+                </button>
+
+                <p className="mb-4 text-base font-semibold md:text-xl">Delete Recipe</p>
+                <p className='mb-4 text-sm md:text-base'>Are You Sure You Want To Delete Recipe &quot;{`${formatedRecipeData?.title}`}&quot; Permanently ? </p>
+                <div className="flex justify-end gap-4">
+                  <button className="px-4 py-2 text-sm border rounded-lg md:text-base text-slate-500 border-slate-600 " onClick={closeModal}>Cancel</button>
+                  <button className="flex items-center justify-center gap-2 px-4 py-2 text-sm text-white bg-red-400 rounded-lg md:text-base hover:opacity-80" onClick={handleDelete}><span>Delete</span>{isDeleting && <ImSpinner8 className='spinner-rotate' />}</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
       }
     </>
   );

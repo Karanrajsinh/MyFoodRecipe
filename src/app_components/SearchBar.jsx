@@ -14,17 +14,20 @@ function SearchBar() {
     const { setFetchedRecipes, setNoRecipeFound, setFetchingRecipes } = useRecipes();
 
     const parameter = () => {
+
+        const query = searchQuery.toLowerCase().trimEnd();
+
         if (filter === 'title') {
             return [
-                where('title', '>=', searchQuery.toLowerCase()),
-                where('title', '<=', searchQuery.toLowerCase() + "\uf8ff")
+                where('title', '>=', query),
+                where('title', '<=', query + "\uf8ff")
             ];
         }
         if (filter === 'ingredients') {
-            return where('ingredientsNameList', 'array-contains', searchQuery.toLowerCase());
+            return where('ingredientsNameList', 'array-contains', query);
         }
         if (filter === 'category') {
-            return where('category', '==', searchQuery.toLowerCase());
+            return where('categories', 'array-contains', query);
         }
         return null; // Default return if no match
     };
@@ -72,10 +75,10 @@ function SearchBar() {
             <div className="flex flex-row p-2 bg-white border border-gray-300 rounded-full md:min-w-[40%]">
                 <div className="gap-4">
                     <Select defaultValue="title" onValueChange={(value) => setFilter(value)}>
-                        <SelectTrigger className=" text-xs md:text-sm w-[110px] border-none md:min-w-[150px]">
+                        <SelectTrigger className="text-xs md:text-sm w-[110px] border-none md:min-w-[150px]">
                             <SelectValue placeholder="title" />
                         </SelectTrigger>
-                        <SelectContent className="rounded-xl">
+                        <SelectContent className="z-50 rounded-xl" ref={(ref) => ref?.addEventListener('touchend', (e) => e.preventDefault())} >
                             <SelectGroup>
                                 <SelectItem className="text-xs md:text-sm rounded-xl" value="title">Recipe</SelectItem>
                                 <SelectItem className="text-xs md:text-sm rounded-xl" value="ingredients">Ingredients</SelectItem>

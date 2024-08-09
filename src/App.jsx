@@ -75,6 +75,10 @@ function App() {
         {
           path: "recipe/:id",
           element: <RecipeDetail />
+        },
+        {
+          path: "recipe-edit/:id",
+          element: <AddRecipe />
         }
       ]
     }

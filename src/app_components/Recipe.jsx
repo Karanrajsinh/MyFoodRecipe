@@ -11,7 +11,7 @@ function Recipe({ recipe }) {
   const [isAuthor, setIsAuthor] = useState();
 
   useEffect(() => {
-    checkIsOwner(uid, recipe.id).then((res) => {
+    checkIsOwner(uid, recipe?.id).then((res) => {
       if (res.empty) setIsAuthor(false);
       else setIsAuthor(true);
     }) /* eslint-disable */
@@ -19,40 +19,30 @@ function Recipe({ recipe }) {
   }, [])
   /* eslint-ensable */
 
-  let ingredientsList = [];
-  recipe.ingredients.forEach((ing => {
-    ingredientsList.push(capitalizeText(ing.name));
+  let formatedIngredientsList = [];
+  let formatedCategories = [];
+
+  recipe?.ingredients.forEach((ing => {
+    formatedIngredientsList.push(capitalizeText(ing.name));
+  }
+  ));
+
+  recipe?.categories?.forEach((category => {
+    formatedCategories.push(capitalizeText(category));
   }
   ));
 
   const filteredRecipe =
   {
-    title: capitalizeText(recipe.title),
-    photoUrl: recipe.photoUrl,
-    author: recipe.author,
-    ingredients: ingredientsList,
-    category: capitalizeText(recipe.category)
+    title: capitalizeText(recipe?.title),
+    photoUrl: recipe?.photoUrl,
+    author: recipe?.author,
+    ingredients: formatedIngredientsList,
+    categories: formatedCategories
   }
 
   return (
-    // <Link to={`/main/recipe/${recipe.id}`}>
-    //   <div className="  bg-[#ffb9b9] bg-opacity-50 text-[#a75858] hover:bg-opacity-80 flex flex-col justify-center p-4 mx-auto mb-4  border border-gray-300 rounded-3xl shadow-md w-[50em] md:flex-row">
-    //     <img src={filteredRecipe?.photoUrl} alt={filteredRecipe?.title} className="max-w-[120px] h-[120px] mb-4 rounded-[10rem] md:w-1/4 md:mb-0 object-cover" />
-    //     <div className="flex-grow md:ml-4">
-    //       {isAuthor && <FaUserCircle className="relative float-right text-xl top-2 right-4" />}
-    //       <h2 className="mb-3 text-xl font-bold">{filteredRecipe?.title}</h2>
-    //       <p className="mb-1 italic"><span className='mr-1 not-italic font-semibold'>Author:</span>{filteredRecipe?.author}</p>
-    //       <div className="flex gap-1 mb-1">
-    //         <span className='mr-1 not-italic font-semibold'>Ingredients:</span>
-    //         {filteredRecipe.ingredients.map((ing, index) => (
-    //           <p key={index}>{ing}{index === filteredRecipe.ingredients.length - 1 ? '' : ","}</p>
-    //         ))}
-    //       </div>
-    //       <p className=""><span className='mr-1 not-italic font-semibold'>Category:</span> {filteredRecipe?.category}</p>
-    //     </div>
-    //   </div>
-    // </Link>
-    <Link to={`/main/recipe/${recipe.id}`}>
+    <Link to={`/main/recipe/${recipe?.id}`}>
       <div className="bg-[#ffb9b9] frank-ruhl-libre bg-opacity-50 fira-sans text-[#a75858] hover:bg-opacity-80 flex items-center justify-center px-1 py-3 mx-auto  border border-gray-300 rounded-2xl md:rounded-3xl shadow-md w-full max-w-[50em] gap-4 md:p-4">
         <img
           src={filteredRecipe?.photoUrl}
@@ -65,11 +55,16 @@ function Recipe({ recipe }) {
           <p className="mb-1 text-xs italic md:text-base"><span className='mr-1 not-italic font-semibold'>Author:</span>{filteredRecipe?.author}</p>
           <div className="flex w-full mb-1 text-xs flext md:text-base ">
             <span className='mr-1 not-italic font-semibold'>Ingredients:</span>
-            <p className="max-w-[180px] md:max-w-[400px] truncate">{filteredRecipe.ingredients.map((ing, index) => (
-              <span className="" key={index}>{ing}{index === filteredRecipe.ingredients.length - 1 ? '' : ","}</span>
+            <p className="max-w-[180px] md:max-w-[400px] truncate">{filteredRecipe?.ingredients.map((ing, index) => (
+              <span className="" key={index}>{ing}{index === filteredRecipe?.ingredients.length - 1 ? '' : ","}</span>
             ))}</p>
           </div>
-          <p className="text-xs md:text-base"><span className='mr-1 not-italic font-semibold'>Category:</span> {filteredRecipe?.category}</p>
+          <div className="flex w-full mb-1 text-xs flext md:text-base ">
+            <span className='mr-1 not-italic font-semibold'>Category:</span>
+            <p className="max-w-[180px] md:max-w-[400px] truncate">{filteredRecipe?.categories.map((category, index) => (
+              <span className="" key={index}>{category}{index === filteredRecipe?.categories.length - 1 ? '' : ","}</span>
+            ))}</p>
+          </div>
         </div>
       </div>
     </Link>
