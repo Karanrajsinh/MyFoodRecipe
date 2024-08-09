@@ -37,7 +37,7 @@ function RecipePage() {
                     ) : (
                         <p className="flex text-sm md:text-lg items-center justify-center my-[60%] md:my-[35%] gap-3"><ImSpinner8 className="text-red-400 spinner-rotate" /><span className="text-slate-600">Loading recipes...</span></p>
                     )}
-                    {(!isLoading && data.length < 1) && <p className="my-[70%] text-sm md:text-lg flex justify-center items-center gap-2 md:my-[30%] text-slate-500 text-center">No  Recipe In Your List, Add One <img className="w-6" src={img} /> </p>}
+                    {(!isLoading && data.length < 1) && <p className="my-[70%] text-sm md:text-lg flex justify-center items-center gap-2 md:my-[30%] text-slate-500 text-center"><img className="w-6" src={img} />No  Recipe In Your List, Add One </p>}
                 </TabsContent>
 
                 <TabsContent value="bookmarked" className="h-10 p-4">
@@ -46,7 +46,7 @@ function RecipePage() {
                     ) : (
                         <p className="flex text-sm md:text-lg items-center justify-center my-[60%] md:my-[35%] gap-3"><ImSpinner8 className="text-red-400 spinner-rotate" /><span className="text-slate-600">Loading recipes...</span></p>
                     )}
-                    {(!isLoading && data.length < 1) && <p className="my-[70%] flex justify-center text-sm md:text-lg items-center gap-2 md:my-[30%] text-slate-500 text-center">No  Recipe In Your List, Add One <img className="w-6" src={img} /> </p>}
+                    {(!isLoading && data.length < 1) && <p className="my-[70%] flex justify-center text-sm md:text-lg items-center gap-2 md:my-[30%] text-slate-500 text-center"><img className="w-6" src={img} />No  Recipe In Your List, Add One </p>}
                 </TabsContent>
             </Tabs>
         </div>

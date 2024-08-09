@@ -22,9 +22,9 @@ function Navbar() {
     <nav className="sticky top-0 px-0 z-50 py-5 sm:p-8 text-[white] bg-[#f48982] shadow-lg md:shadow-xl fira-sans">
       <div className="container flex flex-wrap items-center justify-between mx-auto">
         <div className="flex items-center space-x-2 text-xl font-bold sm:text-xl">
-          <Link to="/main" className="flex items-center">
-            <p>MyFoodRecipes</p>
+          <Link to="/main" className="flex items-center gap-2">
             <img className="w-6 ml-2 md:w-8" src={img} alt="Logo" />
+            <p>MyFoodRecipes</p>
           </Link>
         </div>
         <div className="hidden space-x-2 text-xs md:flex sm:space-x-4 sm:text-base">
@@ -88,22 +88,22 @@ function Navbar() {
           } transition-transform duration-300 ease-in-out`}
       >
         <div className="flex items-center justify-center py-2 mt-24 space-x-2 text-xl font-bold border-b-2 border-white sm:text-xl">
-          <Link onClick={closeMenu} to="/main" className="flex items-center">
-            <p>MyFoodRecipes</p>
+          <Link onClick={closeMenu} to="/main" className="flex items-center gap-2">
             <img className="w-6 ml-2 md:w-8" src={img} alt="Logo" />
+            <p>MyFoodRecipes</p>
           </Link>
         </div>
         <div className="flex flex-col items-center justify-center gap-8 px-4 my-[90%]">
           <Link onClick={closeMenu} to="/main/add-recipe" className="flex items-center justify-center w-full gap-2 px-2 py-0 text-center hover:text-white sm:px-4 sm:py-2">
-            <span>Add Recipe</span>
             <img className="w-6" src={recipeImg} alt="" />
+            <span>Add Recipe</span>
           </Link>
 
           {/* <div className="w-[114%] border-t border-white"></div> Divider */}
 
           <Link onClick={closeMenu} to="/main/my-recipes" className="flex items-center justify-center w-full gap-2 px-2 py-0 text-center hover:text-white sm:px-4 sm:py-2">
-            <span>Recipes</span>
             <img className="w-8" src={recipeList} alt="" />
+            <span>Recipes</span>
           </Link>
 
           {/* <div className="w-[114%] border-t border-white"></div> Divider */}

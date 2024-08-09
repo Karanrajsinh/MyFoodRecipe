@@ -50,7 +50,10 @@ function Login() {
 
   return (
     <div className="flex flex-col justify-center min-h-screen gap-28">
-      <div className="flex items-center justify-center gap-2"><span className="text-xl font-bold text-red-400 md:text-3xl">MyFoodRecipe</span><img className="w-10 md:w-12" src={img} /></div>
+      <div className="flex items-center justify-center gap-2">
+        <img className="w-10 md:w-12" src={img} />
+        <span className="text-xl font-bold text-red-400 md:text-3xl">MyFoodRecipe</span>
+      </div>
       <div className="flex items-center justify-center px-4 mx-6 md:mx-0 sm:px-6 lg:px-8">
         <form
           onSubmit={handleSubmit(onSubmit)}

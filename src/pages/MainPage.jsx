@@ -17,9 +17,9 @@ function MainPage() {
                     {fetchedRecipes.length > 0 && (
                         <RecipesList recipes={fetchedRecipes} />
                     )}
-                    {(!fetchingRecipes && fetchedRecipes.length < 1 && !noRecipeFound) && <p className="flex items-center justify-center gap-2 my-auto text-sm text-center md:text-lg text-slate-500">Search Your Recipe <img className="w-8" src={img} /></p>}
+                    {(!fetchingRecipes && fetchedRecipes.length < 1 && !noRecipeFound) && <p className="flex items-center justify-center gap-2 my-auto text-sm text-center md:text-lg text-slate-500"> <img className="w-8" src={img} />Search Your Recipe</p>}
                     {fetchingRecipes && <p className="flex items-center justify-center gap-2 my-auto text-sm text-center md:text-lg text-slate-500">Searching Recipes <ImSpinner8 className="text-red-400 spinner-rotate" /></p>}
-                    {(!fetchingRecipes && noRecipeFound && fetchedRecipes.length < 1) && <p className="flex items-center justify-center gap-2 my-auto text-sm text-center md:text-lg text-slate-500">No Recipe Found<img className="w-8" src={img} /></p>}
+                    {(!fetchingRecipes && noRecipeFound && fetchedRecipes.length < 1) && <p className="flex items-center justify-center gap-2 my-auto text-sm text-center md:text-lg text-slate-500"><img className="w-8" src={img} />No Recipe Found</p>}
                 </div>
             </div>
         </>
