@@ -51,7 +51,7 @@ function Login() {
   return (
     <div className="flex flex-col justify-center min-h-screen gap-28">
       <div className="flex items-center justify-center gap-2"><span className="text-xl font-bold text-red-400 md:text-3xl">MyFoodRecipe</span><img className="w-10 md:w-12" src={img} /></div>
-      <div className="flex items-center justify-center px-4 mx-10 md:mx-0 sm:px-6 lg:px-8">
+      <div className="flex items-center justify-center px-4 mx-6 md:mx-0 sm:px-6 lg:px-8">
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="w-full max-w-md px-5 py-4 bg-white border rounded-lg shadow-lg border-slate-300 sm:p-6 lg:p-8"
@@ -98,7 +98,7 @@ function Login() {
             />
             {errors.password && <p className="mt-1 text-xs text-red-500 md:text-base">{errors.password.message}</p>}
           </div>
-          {error !== '' && <p className="mb-2 text-red-500">{error}</p>}
+          {error !== '' && <p className="mb-2 text-sm text-red-500 md:text-base">{error}</p>}
           <button
             type="submit"
             className="flex items-center justify-center w-full gap-2 p-2 text-sm text-white bg-red-400 rounded-lg lg:text-base"

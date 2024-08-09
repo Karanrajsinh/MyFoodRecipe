@@ -150,12 +150,12 @@ const RecipeDetail = () => {
           <p className='flex items-center justify-center my-[80%] md:m-[20%] text-center text-sm md:text-lg gap-2 text-slate-500'>Loading Recipe<ImSpinner8 className='text-red-400 spinner-rotate' /></p>
         ) : (
           <>
-            <div className=" flex flex-col w-full md:mt-8 md:w-[50%] md:min-h-screen mx-auto">
+            <div className=" flex  flex-col w-full md:mt-8 md:w-[50%] md:min-h-screen mx-auto">
               <div className="relative bg-black shadow-lg h-44 md:rounded-3xl md:h-60">
                 <img
                   src={formatedRecipeData?.photoUrl}
                   alt={formatedRecipeData?.title}
-                  className="object-cover w-full shadow-md h-44 md:h-60 md:rounded-3xl opacity-70"
+                  className="object-cover w-full shadow-md realtive h-44 md:h-60 md:rounded-3xl opacity-70"
                 />
                 <div className="absolute top-0 left-0 flex items-center justify-center w-full bg-red-500 h-44 bg-opacity-40 md:h-60 md:rounded-3xl">
                   <h1 className="text-2xl font-bold text-red-100 spectral-sc md:text-4xl">{formatedRecipeData?.title}</h1>
@@ -230,7 +230,7 @@ const RecipeDetail = () => {
 
             <div id='modal' className="absolute inset-0 z-50 flex items-center justify-center">
               <div className="bg-red-100  text-[#993b3b] p-8 rounded-lg shadow-lg relative w-full max-w-sm md:w-[40em] md:max-w-[40em]">
-                <button className="absolute text-gray-500 top-3 right-3 hover:text-gray-700" onClick={closeModal}>
+                <button className="absolute text-[#993b3b] top-3 right-3 hover:opacity-70" onClick={closeModal}>
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
                   </svg>
@@ -239,7 +239,7 @@ const RecipeDetail = () => {
                 <p className="mb-4 text-base font-semibold md:text-xl">Delete Recipe</p>
                 <p className='mb-4 text-sm md:text-base'>Are You Sure You Want To Delete Recipe &quot;{`${formatedRecipeData?.title}`}&quot; Permanently ? </p>
                 <div className="flex justify-end gap-4">
-                  <button className="px-4 py-2 text-sm border rounded-lg md:text-base text-slate-500 border-slate-600 " onClick={closeModal}>Cancel</button>
+                  <button className="px-4 py-2 text-sm border rounded-lg md:text-base text-[#993b3b] border-[#993b3b] " onClick={closeModal}>Cancel</button>
                   <button className="flex items-center justify-center gap-2 px-4 py-2 text-sm text-white bg-red-400 rounded-lg md:text-base hover:opacity-80" onClick={handleDelete}><span>Delete</span>{isDeleting && <ImSpinner8 className='spinner-rotate' />}</button>
                 </div>
               </div>

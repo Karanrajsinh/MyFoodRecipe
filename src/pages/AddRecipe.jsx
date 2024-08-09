@@ -21,24 +21,43 @@ function AddRecipe() {
   const [recipeTitle, setRecipeTitle] = useState('');
   const [fetchingRecipe, setFetchingRecipe] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [recipeData, setRecipeData] = useState(null);
   const auth = getAuth();
   const query = useQueryClient();
+  const [isFormChanged, setIsFormChanged] = useState(false);
+
+  const defaultData = {
+    title: '',
+    photoUrl: '',
+    servings: '',
+    prepTime: [{ time: "" }],
+    cookTime: [{ time: "" }],
+    categories: [''],
+    ingredients: [{ name: '', quantity: '' }],
+    steps: [{ description: '' }]
+  }
+
 
   const name = auth.currentUser.displayName;
   const { uid } = useUserAuth();
 
-  const { register, trigger, getValues, reset, handleSubmit, setValue, control, formState: { errors } } = useForm({
-    defaultValues: {
-      title: '',
-      photoUrl: '',
-      servings: '',
-      prepTime: [{ time: "" }],
-      cookTime: [{ time: "" }],
-      categories: [''],
-      ingredients: [{ name: '', quantity: '' }],
-      steps: [{ description: '' }]
-    }
+  const { register, trigger, getValues, reset, watch, handleSubmit, setValue, control, formState: { errors } } = useForm({
+    defaultValues: defaultData
   });
+
+
+  const formValues = watch();
+
+  useEffect(() => {
+    const hasChanged = Object.keys(defaultData).some((key) => {
+      const currentValue = formValues[key];
+      const initialValue = recipeData ? recipeData[key] : defaultData[key];
+      return JSON.stringify(currentValue) !== JSON.stringify(initialValue);
+    });
+    setIsFormChanged(hasChanged);
+    /*eslint-disable */
+  }, [formValues, recipeData]);
+  /*eslint-ensable */
 
   useEffect(() => {
     setEditRecipe(Boolean(id));
@@ -51,28 +70,17 @@ function AddRecipe() {
       getRecipe(id).then((res) => {
         setRecipeTitle(res.data()?.title);
         reset(res.data());
+        setRecipeData(res.data());
         setFetchingRecipe(false);
       })
     }
     else {
-      reset({
-        title: '',
-        photoUrl: '',
-        servings: '',
-        prepTime: { time: "" },
-        cookTime: { time: "" },
-        categories: [''],
-        ingredients: [{ name: "", quantity: "", unit: "" }],
-        steps: [{ description: "" }]
-      });
+      reset(defaultData);
 
       setFetchingRecipe(false);
-    }
-  }, [editRecipe, id, setRecipeTitle, reset])
-
-
-
-
+    }/*eslint-disable */
+  }, [editRecipe, id, setRecipeTitle, reset,])
+  /*eslint-enable */
 
 
   const { fields: categoryFields, append: addCategory, remove: removeCategory } = useFieldArray({
@@ -133,8 +141,8 @@ function AddRecipe() {
   }
 
   return (
-    <div className="flex items-center justify-center  md:mt-8 md:h-[85vh]">
-      <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-3xl p-8 bg-white border shadow-lg md:rounded-lg border-slate-300">
+    <div className="flex items-center justify-center md:h-[90vh] my-auto">
+      <form onSubmit={handleSubmit(onSubmit)} className="w-full md:min-w-[50em] max-w-[70em] p-8 bg-white border shadow-lg md:rounded-lg border-slate-300">
         <h1 className="mb-6 text-lg font-bold text-red-400 md:text-2xl">{editRecipe ? `Edit Recipe "${capitalizeText(recipeTitle)}"` : "Add Recipe"}</h1>
         <div className="flex flex-col justify-between gap-5 md:flex-row md:mb-6">
           <div className="flex flex-col w-full text-sm md:pr-4 md:mt-10 ">
@@ -234,7 +242,7 @@ function AddRecipe() {
               />
             </div>
             {errors.cookTime && <p className="mt-1 text-red-500">{errors.cookTime.time.message}</p>}
-            <div className='my-3'>
+            <div className='mt-4'>
               <h2 className="mb-2 font-semibold text-red-400 md:text-lg">Category</h2>
               <div className="p-2 overflow-y-scroll border rounded-lg max-h-40 custom-scrollbar">
                 {categoryFields.map((field, index) => (
@@ -282,18 +290,23 @@ function AddRecipe() {
                       disabled={isLoading || fetchingRecipe}
                       type="text"
                       placeholder="Name"
-                      {...register(`ingredients.${index}.name`, { required: 'Name is required' })}
+                      {...register(`ingredients.${index}.name`, {
+                        required: 'Name is required',
+                      })}
                       className="w-1/2 p-2 border border-gray-400 rounded-lg disabled:cursor-not-allowed focus:border-red-400 focus:outline-none"
                     />
                     <input
-                      value={getValues(`ingredients.${index}.unit`) === "to taste" ? "" : getValues(`ingredients.${index}.quantity`)}
                       disabled={isLoading || getValues(`ingredients.${index}.unit`) === "to taste"}
                       type="number"
+
                       placeholder="Quantity"
                       {...register(`ingredients.${index}.quantity`, {
                         validate: {
                           required: (value) => {
-                            if (getValues(`ingredients.${index}.unit`) === 'to taste') return true;
+                            if (getValues(`ingredients.${index}.unit`) === 'to taste') {
+                              setValue(`ingredients.${index}.quantity`, '');
+                              return true
+                            }
                             return value !== "" || 'Quantity is required';
                           }
                         }, min: { value: 1, message: 'Must be  greater than 0' },
@@ -397,16 +410,30 @@ function AddRecipe() {
             </div>
           </div>
         </div>
-        <button
-          type="submit"
-          disabled={isLoading}
-          className="flex items-center justify-center w-full gap-4 p-2 mt-6 text-white bg-red-400 rounded-lg"
-        >
-          <span>
-            {editRecipe ? "Edit Recipe" : "Add Recipe"}
-          </span>
-          {isLoading && <ImSpinner8 className='spinner-rotate' />}
-        </button>
+        <div className='flex items-center justify-center gap-10 mt-8 md:gap-4'>
+          <button
+            type="submit"
+            disabled={isLoading || !isFormChanged}
+            className="flex items-center justify-center gap-4 p-2 text-white bg-red-400 rounded-lg w-28 md:w-32 disabled:cursor-not-allowed hover:bg-opacity-80 disabled:bg-opacity-50"
+          >
+            <span>
+              {editRecipe ? "Edit Recipe" : "Add Recipe"}
+            </span>
+            {isLoading && <ImSpinner8 className='spinner-rotate' />}
+          </button>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              navigate(-1);
+            }
+            }
+            disabled={isLoading}
+            className="flex items-center justify-center w-20 gap-4 p-2 text-red-400 bg-white border border-red-400 rounded-lg md:w-32 hover:bg-slate-100 disabled:cursor-not-allowed disabled:bg-opacity-50"
+          >
+            Cancel
+          </button>
+
+        </div>
       </form>
     </div>
   );
