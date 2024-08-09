@@ -42,7 +42,7 @@ function Navbar() {
             className="relative flex items-center justify-center gap-2 px-2 py-1 hover:text-white sm:px-4 sm:py-1"
           >
             <img className="w-6" src={recipeList} alt="" />
-            <span className="relative underline-hover">Recipes</span>
+            <span className="relative underline-hover">MyRecipes</span>
           </Link>
           <button
             onClick={() => signOut(auth)}
@@ -103,7 +103,7 @@ function Navbar() {
 
           <Link onClick={closeMenu} to="/main/my-recipes" className="flex items-center justify-center w-full gap-2 px-2 py-0 text-center hover:text-white sm:px-4 sm:py-2">
             <img className="w-8" src={recipeList} alt="" />
-            <span>Recipes</span>
+            <span>MyRecipes</span>
           </Link>
 
           {/* <div className="w-[114%] border-t border-white"></div> Divider */}

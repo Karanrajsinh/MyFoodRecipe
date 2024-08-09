@@ -30,9 +30,9 @@ function AddRecipe() {
     title: '',
     photoUrl: '',
     servings: '',
-    prepTime: [{ time: "" }],
-    cookTime: [{ time: "" }],
-    categories: [''],
+    prepTime: { time: "" },
+    cookTime: { time: "" },
+    categories: [],
     ingredients: [{ name: '', quantity: '' }],
     steps: [{ description: '' }]
   }
@@ -270,7 +270,7 @@ function AddRecipe() {
                   type="button"
                   disabled={isLoading || fetchingRecipe}
                   className="p-2 mt-2 text-xs text-white bg-red-400 rounded-lg md:text-sm"
-                  onClick={() => addCategory({ description: '' })}
+                  onClick={() => addCategory()}
                 >
                   Add Category
                 </button>
@@ -414,7 +414,7 @@ function AddRecipe() {
           <button
             type="submit"
             disabled={isLoading || !isFormChanged}
-            className="flex items-center justify-center gap-4 p-2 text-white bg-red-400 rounded-lg w-28 md:w-32 disabled:cursor-not-allowed hover:bg-opacity-80 disabled:bg-opacity-50"
+            className="flex items-center justify-center w-32 gap-2 p-2 text-white bg-red-400 rounded-lg disabled:cursor-not-allowed hover:bg-opacity-80 disabled:bg-opacity-50"
           >
             <span>
               {editRecipe ? "Edit Recipe" : "Add Recipe"}

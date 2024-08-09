@@ -32,29 +32,6 @@ const RecipeDetail = () => {
     setModalOpen(false);
   };
 
-  // useEffect(() => {
-  //   setLoading(true);
-
-  //   checkIsOwner(uid, id).then((res) => {
-  //     if (res.empty) setIsAuthor(false);
-  //     else setIsAuthor(true);
-  //   })
-
-  //   checkSavedRecipe(uid, id).then((res) => {
-  //     if (!res.empty) setIsBookmarked(true);
-  //   })
-
-  //   getRecipe(id).then((res) => {
-  //     if (!res.exists()) navigate('/main/my-recipes');
-  //     setRecipeData(res.data());
-  //   })
-
-
-  //   /* eslint-disable */
-  // }, [])
-  // /* eslint-ensable */
-
-
   useEffect(() => {
     const checkData = async () => {
       setLoading(true);
@@ -162,10 +139,10 @@ const RecipeDetail = () => {
                 </div>
               </div>
               <div className="text-sm md:text-base relative  p-6 md:p-8 mx-auto  text-[#993b3b] min-w-[100%] max-w-[25em] md:min-w-[80%] md:max-w-[70em]">
-                <div className="flex items-start justify-between mb-8">
+                <div className="flex items-start justify-between mt-4 mb-8">
                   <div>
                     <p className="mb-1 italic"><span className='font-semibold'>Author:</span> {formatedRecipeData?.author}</p>
-                    <div className="flex gap-1 mb-1"><span className='font-semibold'>Category:</span> <p> {formatedRecipeData?.categories.map((category, index) => <span className='mr-1' key={index}>{category}{index === formatedRecipeData?.categories.length - 1 ? '' : ","}</span>)}</p></div>
+                    <div className="flex gap-1 mb-1"><span className='font-semibold'>Category:</span> <p className='w-[15em]'> {formatedRecipeData?.categories.map((category, index) => <span className='mr-1' key={index}>{category}{index === formatedRecipeData?.categories.length - 1 ? '' : ","}</span>)}</p></div>
                     <p className="mb-1"><span className='font-semibold'>Servings:</span> {formatedRecipeData?.servings}</p>
                     <p className="mb-1"><span className='font-semibold'>Preparation:</span>{` ${formatedRecipeData?.prepTime?.time} ${formatedRecipeData?.prepTime?.unit}`}</p>
                     <p className="mb-1"><span className='font-semibold'>Cooking:</span>{` ${formatedRecipeData?.cookTime?.time} ${formatedRecipeData?.cookTime?.unit}`}</p>
@@ -183,7 +160,7 @@ const RecipeDetail = () => {
                       )}
                     </button>
                     {isSaving && <ImSpinner8 className='mx-auto text-sm md:text-xl spinner-rotate' />}
-                    <div className='flex flex-col items-center justify-center gap-3'>
+                    <div className='flex flex-col items-center justify-center gap-5'>
                       {isAuthor &&
                         <>
                           <button>
