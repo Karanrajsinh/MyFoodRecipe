@@ -130,10 +130,11 @@ function AddRecipe() {
 
     if (!editRecipe) {
       addRecipe(uid, formatedData, name).then(() => {
-        query.invalidateQueries({ queryKey: ['recipes', 'recipes'] })
-        setIsLoading(false);
-        toast.success('Recipe Created');
-        navigate('/main/my-recipes')
+        query.invalidateQueries({ queryKey: ['recipes', 'recipes'] }).then(() => {
+          setIsLoading(false);
+          toast.success('Recipe Created');
+          navigate('/main/my-recipes')
+        })
       })
     }
     else {
