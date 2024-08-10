@@ -13,6 +13,9 @@ import { Toaster } from 'react-hot-toast';
 import './index.css'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { ErrorBoundary } from 'react-error-boundary';
+import ErrorFallBack from './app_components/ErrorFallBack';
+import PageNotFound from './app_components/PageNotFound';
 
 
 
@@ -42,50 +45,67 @@ function App() {
 
   const router = createBrowserRouter([
     {
-      path: '/',
-      element: <Navigate to="/main" />,
 
-    },
-    {
-      path: 'login',
-      element: <Login />
-    },
-    {
-      path: "main",
-      element:
-        <ProtectedRoute user={user}>
-          <Navbar />
-          <RecipesProvider>
-            <Outlet />
-          </RecipesProvider>
-        </ProtectedRoute>,
+      element: <ErrorBoundary FallbackComponent={ErrorFallBack} onReset={() => window.location.replace('/')}>
+        <Outlet />
+      </ErrorBoundary>,
       children: [
+
         {
-          index: true,
-          element: <MainPage />
+          path: '/',
+          element:
+            <ErrorBoundary fallback={<ErrorFallBack />}>
+              <Navigate to="/main" />,
+            </ErrorBoundary>
         },
         {
-          path: "add-recipe",
-          element: <AddRecipe />
+          path: 'login',
+          element: <Login />
         },
         {
-          path: "my-recipes",
-          element: <RecipePage />
-        },
-        {
-          path: "recipe/:id",
-          element: <RecipeDetail />
-        },
-        {
-          path: "recipe-edit/:id",
-          element: <AddRecipe />
+          path: "main",
+          element:
+            <ProtectedRoute user={user}>
+              <Navbar />
+              <RecipesProvider>
+                <Outlet />
+              </RecipesProvider>
+            </ProtectedRoute>,
+          children: [
+            {
+              index: true,
+              element: <MainPage />
+            },
+            {
+              path: "add-recipe",
+              element: <AddRecipe />
+            },
+            {
+              path: "my-recipes",
+              element: <RecipePage />
+            },
+            {
+              path: "recipe/:id",
+              element: <RecipeDetail />
+            },
+            {
+              path: "recipe-edit/:id",
+              element: <AddRecipe />
+            },
+
+          ]
         }
       ]
-    }
+    },
+    {
+      path: "*",
+      element: <PageNotFound />
+    },
   ])
 
   return (
     <>
+
       <QueryClientProvider client={queryClient}>
         <ReactQueryDevtools initialIsOpen={false} />
         <RouterProvider router={router} />
@@ -99,6 +119,7 @@ function App() {
           }
         }} containerStyle={{ margin: "16px" }} />
       </QueryClientProvider>
+
     </>
   )
 }

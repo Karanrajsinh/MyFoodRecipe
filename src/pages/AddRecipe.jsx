@@ -49,6 +49,7 @@ function AddRecipe() {
   const formValues = watch();
 
   useEffect(() => {
+
     const hasChanged = Object.keys(defaultData).some((key) => {
       const currentValue = formValues[key];
       const initialValue = recipeData ? recipeData[key] : defaultData[key];
@@ -69,14 +70,21 @@ function AddRecipe() {
     if (editRecipe) {
       getRecipe(id).then((res) => {
         setRecipeTitle(res.data()?.title);
-        reset(res.data());
-        setRecipeData(res.data());
+        const formatedData = {
+          ...res.data(),
+          categories: res.data().categories.map((category) => {
+            return {
+              value: category,
+            };
+          })
+        };
+        reset(formatedData);
+        setRecipeData(formatedData);
         setFetchingRecipe(false);
       })
     }
     else {
       reset(defaultData);
-
       setFetchingRecipe(false);
     }/*eslint-disable */
   }, [editRecipe, id, setRecipeTitle, reset,])
@@ -124,7 +132,8 @@ function AddRecipe() {
       addRecipe(uid, formatedData, name).then(() => {
         query.invalidateQueries({ queryKey: ['recipes', 'recipes'] })
         setIsLoading(false);
-        toast.success('Recipe Created')
+        toast.success('Recipe Created');
+        navigate('/main/my-recipes')
       })
     }
     else {
@@ -414,7 +423,7 @@ function AddRecipe() {
           <button
             type="submit"
             disabled={isLoading || !isFormChanged}
-            className="flex items-center justify-center w-32 gap-2 p-2 text-white bg-red-400 rounded-xl disabled:cursor-not-allowed hover:bg-opacity-80 disabled:bg-opacity-50"
+            className="flex items-center justify-center w-32 gap-2 p-2 text-sm text-white bg-red-400 md:text-base rounded-xl disabled:cursor-not-allowed hover:bg-opacity-80 disabled:bg-opacity-50"
           >
             <span>
               {editRecipe ? "Edit Recipe" : "Add Recipe"}
@@ -428,7 +437,7 @@ function AddRecipe() {
             }
             }
             disabled={isLoading}
-            className="flex items-center justify-center w-20 gap-4 p-2 text-red-400 bg-white border border-red-400 rounded-xl md:w-32 hover:bg-slate-100 disabled:cursor-not-allowed disabled:bg-red-100"
+            className="flex items-center justify-center px-6 py-2 text-sm text-red-400 bg-white border border-red-400 md:text-base rounded-xl md:w-32 hover:bg-slate-100 disabled:cursor-not-allowed disabled:bg-red-100"
           >
             Cancel
           </button>
