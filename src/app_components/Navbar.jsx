@@ -113,7 +113,7 @@ function Navbar() {
               closeMenu();
               signOut(auth);
             }}
-            className="absolute  flex items-center justify-center w-[80%] gap-2 px-3 py-2 text-red-500 bg-white bottom-5 rounded-xl hover:opacity-80 sm:px-4 sm:py-2"
+            className="absolute  flex items-center justify-center w-[60%] gap-2 px-3 py-2 text-red-500 bg-white bottom-5 rounded-xl hover:opacity-80 sm:px-4 sm:py-2"
           >
             Logout
             <IoLogOutOutline />

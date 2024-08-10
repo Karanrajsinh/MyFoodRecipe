@@ -32,7 +32,7 @@ function AddRecipe() {
     servings: '',
     prepTime: { time: "" },
     cookTime: { time: "" },
-    categories: [],
+    categories: [{ value: "" }],
     ingredients: [{ name: '', quantity: '' }],
     steps: [{ description: '' }]
   }
@@ -107,7 +107,7 @@ function AddRecipe() {
     }))
 
 
-    const formatedCategory = data.categories.map((category) => category.toLowerCase().trimEnd())
+    const formatedCategory = data.categories.map((category) => category.value.toLowerCase().trimEnd())
 
     const title = data.title.toLowerCase().trimEnd();
 
@@ -244,13 +244,13 @@ function AddRecipe() {
             {errors.cookTime && <p className="mt-1 text-red-500">{errors.cookTime.time.message}</p>}
             <div className='mt-4'>
               <h2 className="mb-2 font-semibold text-red-400 md:text-lg">Category</h2>
-              <div className="p-2 overflow-y-scroll border rounded-lg max-h-40 custom-scrollbar">
+              <div className="p-2 overflow-y-scroll border rounded-lg border-slate-400 max-h-40 custom-scrollbar">
                 {categoryFields.map((field, index) => (
                   <div key={field.id} className="flex items-center mb-2">
                     <input
                       disabled={isLoading || fetchingRecipe}
                       placeholder="Category"
-                      {...register(`categories.${index}`, { required: 'Category Cannot Be Empty' })}
+                      {...register(`categories.${index}.value`, { required: 'Category Cannot Be Empty' })}
                       className="w-full p-2 border border-gray-400 rounded-lg disabled:cursor-not-allowed focus:border-red-400 focus:outline-none"
                       rows="2"
                     />
@@ -270,7 +270,7 @@ function AddRecipe() {
                   type="button"
                   disabled={isLoading || fetchingRecipe}
                   className="p-2 mt-2 text-xs text-white bg-red-400 rounded-lg md:text-sm"
-                  onClick={() => addCategory()}
+                  onClick={() => addCategory({ value: "" })}
                 >
                   Add Category
                 </button>
@@ -283,7 +283,7 @@ function AddRecipe() {
           <div className="flex flex-col justify-around w-full text-sm md:pl-4 ">
             <div className="mb-4">
               <h2 className="mb-2 font-semibold text-red-400 md:text-lg">Ingredients</h2>
-              <div className="p-2 overflow-y-scroll border rounded-lg max-h-60 custom-scrollbar">
+              <div className="p-2 overflow-y-scroll border rounded-lg border-slate-400 max-h-60 custom-scrollbar">
                 {ingredientFields.map((field, index) => (
                   <div key={field.id} className="flex items-center mb-2">
                     <input
@@ -375,7 +375,7 @@ function AddRecipe() {
 
             <div>
               <h2 className="mb-2 font-semibold text-red-400 md:text-lg">Steps</h2>
-              <div className="p-2 overflow-y-scroll border rounded-lg max-h-40 custom-scrollbar">
+              <div className="p-2 overflow-y-scroll border rounded-lg border-slate-400 max-h-40 custom-scrollbar">
                 {stepFields.map((field, index) => (
                   <div key={field.id} className="flex items-center mb-2">
                     <textarea
@@ -414,7 +414,7 @@ function AddRecipe() {
           <button
             type="submit"
             disabled={isLoading || !isFormChanged}
-            className="flex items-center justify-center w-32 gap-2 p-2 text-white bg-red-400 rounded-lg disabled:cursor-not-allowed hover:bg-opacity-80 disabled:bg-opacity-50"
+            className="flex items-center justify-center w-32 gap-2 p-2 text-white bg-red-400 rounded-xl disabled:cursor-not-allowed hover:bg-opacity-80 disabled:bg-opacity-50"
           >
             <span>
               {editRecipe ? "Edit Recipe" : "Add Recipe"}
@@ -428,7 +428,7 @@ function AddRecipe() {
             }
             }
             disabled={isLoading}
-            className="flex items-center justify-center w-20 gap-4 p-2 text-red-400 bg-white border border-red-400 rounded-lg md:w-32 hover:bg-slate-100 disabled:cursor-not-allowed disabled:bg-opacity-50"
+            className="flex items-center justify-center w-20 gap-4 p-2 text-red-400 bg-white border border-red-400 rounded-xl md:w-32 hover:bg-slate-100 disabled:cursor-not-allowed disabled:bg-red-100"
           >
             Cancel
           </button>

@@ -24,32 +24,49 @@ function RecipePage() {
 
 
     return (
-        <div className="flex flex-col items-center w-full h-[80vh] mt-14  md:mt-20">
+        <div className="flex flex-col items-center w-full h-[80vh] mt-14 md:mt-16">
             <Tabs onValueChange={(value) => setTab(value)} defaultValue="recipes" className="w-full max-w-4xl">
                 <TabsList className="flex p-3 justify-evenly">
-                    <TabsTrigger className="px-6 py-1 text-base rounded-lg font-ligth md:text-xl" value="recipes">Recipes</TabsTrigger>
-                    <TabsTrigger className="px-6 py-1 text-base rounded-lg font-ligth md:text-xl" value="bookmarked">Saved Recipes</TabsTrigger>
+                    <TabsTrigger className="px-6 py-1 text-base font-normal rounded-lg md:text-xl" value="recipes">Recipes</TabsTrigger>
+                    <TabsTrigger className="px-6 py-1 text-base font-normal rounded-lg md:text-xl" value="bookmarked">Saved Recipes</TabsTrigger>
                 </TabsList>
 
-                <TabsContent value="recipes" className="h-10 p-4">
+                <TabsContent value="recipes" className="relative h-full p-4">
                     {!isLoading ? (
                         <RecipesList recipes={data} />
                     ) : (
-                        <p className="flex text-sm md:text-lg items-center justify-center my-[60%] md:my-[35%] gap-3"><ImSpinner8 className="text-red-400 spinner-rotate" /><span className="text-slate-600">Loading recipes...</span></p>
+                        <p className="absolute inset-0 flex items-center justify-center gap-3 text-sm md:text-lg">
+                            <ImSpinner8 className="text-red-400 spinner-rotate" />
+                            <span className="text-slate-600">Loading Recipes...</span>
+                        </p>
                     )}
-                    {(!isLoading && data.length < 1) && <p className="my-[70%] text-sm md:text-lg flex justify-center items-center gap-2 md:my-[30%] text-slate-500 text-center"><img className="w-6" src={img} />No  Recipe In Your List, Add One </p>}
+                    {(!isLoading && data.length < 1) && (
+                        <p className="absolute inset-0 flex items-center justify-center gap-2 text-sm text-center md:text-lg text-slate-500">
+                            <img className="w-6" src={img} alt="No recipe" />
+                            No Recipe In Your List, Add One
+                        </p>
+                    )}
                 </TabsContent>
 
-                <TabsContent value="bookmarked" className="h-10 p-4">
+                <TabsContent value="bookmarked" className="relative h-full p-4">
                     {!isLoading ? (
                         <RecipesList recipes={data} />
                     ) : (
-                        <p className="flex text-sm md:text-lg items-center justify-center my-[60%] md:my-[35%] gap-3"><ImSpinner8 className="text-red-400 spinner-rotate" /><span className="text-slate-600">Loading recipes...</span></p>
+                        <p className="absolute inset-0 flex items-center justify-center gap-3 text-sm md:text-lg">
+                            <ImSpinner8 className="text-red-400 spinner-rotate" />
+                            <span className="text-slate-600">Loading Recipes...</span>
+                        </p>
                     )}
-                    {(!isLoading && data.length < 1) && <p className="my-[70%] flex justify-center text-sm md:text-lg items-center gap-2 md:my-[30%] text-slate-500 text-center"><img className="w-6" src={img} />No  Recipe In Your List, Add One </p>}
+                    {(!isLoading && data.length < 1) && (
+                        <p className="absolute inset-0 flex items-center justify-center w-full gap-2 text-sm text-center md:text-lg text-slate-500">
+                            <img className="w-6" src={img} alt="No recipe" />
+                            No Recipe In Your List, Add One
+                        </p>
+                    )}
                 </TabsContent>
             </Tabs>
         </div>
+
     );
 }
 
