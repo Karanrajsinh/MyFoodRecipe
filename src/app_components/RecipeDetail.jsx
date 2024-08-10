@@ -191,7 +191,7 @@ const RecipeDetail = () => {
             </ol>
           </div>
         </div>
-        <Button className="flex items-center justify-center px-6 mx-auto mt-2 mb-4 text-sm text-center bg-red-400 md:my-6 w-min md:px-6 md:py-6 md:text-lg rounded-3xl hover:bg-opacity-90 hover:bg-red-400" onClick={() => navigate(-1)}><FaArrowLeftLong className='text-sm' /><span className='flex ml-2 md:mt-1 md:mb-1'>Back</span></Button>
+        <Button className="flex items-center justify-center gap-2 px-6 mx-auto mt-2 mb-4 text-sm text-center bg-red-400 md:gap-3 md:my-6 w-min md:px-10 md:py-6 md:text-lg rounded-3xl hover:bg-opacity-90 hover:bg-red-400" onClick={() => navigate(-1)}><FaArrowLeftLong className='text-sm' /><span className='flex md:mt-1 md:mb-1'>Back</span></Button>
       </div>
       {modalOpen &&
         <>
