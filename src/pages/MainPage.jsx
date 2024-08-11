@@ -18,9 +18,9 @@ function MainPage() {
                     {fetchedRecipes.length > 0 && (
                         <RecipesList recipes={fetchedRecipes} />
                     )}
-                    {(!fetchingRecipes && fetchedRecipes.length < 1 && !noRecipeFound) && <p className="flex items-center justify-center gap-2 my-auto text-sm text-center md:text-lg text-slate-500"> <img className="w-8" src={img} />Search  Recipe</p>}
+                    {(!fetchingRecipes && fetchedRecipes.length < 1 && (!noRecipeFound || searchResults.query == '')) && <p className="flex items-center justify-center gap-2 my-auto text-sm text-center md:text-lg text-slate-500"> <img className="w-8" src={img} />Search  Recipe</p>}
                     {fetchingRecipes && <p className="flex items-center justify-center gap-2 my-auto text-sm text-center md:text-lg text-slate-500">Searching Recipes...<ImSpinner8 className="text-red-400 spinner-rotate" /></p>}
-                    {(!fetchingRecipes && noRecipeFound && fetchedRecipes.length < 1) && <p className="flex items-center justify-center gap-2 my-auto text-sm text-center md:text-lg text-slate-500"><img className="w-8" src={img} />No Recipe Found , For {searchResults.filter}: {`"${searchResults.query}"`}</p>}
+                    {(!fetchingRecipes && noRecipeFound && fetchedRecipes.length < 1 && searchResults.query !== '') && <p className="flex items-center justify-center gap-2 my-auto text-sm text-center md:text-lg text-slate-500"><img className="w-8" src={img} />No Recipe Found , For {searchResults.filter}: {`"${searchResults.query}"`}</p>}
                 </div>
             </div>
         </>

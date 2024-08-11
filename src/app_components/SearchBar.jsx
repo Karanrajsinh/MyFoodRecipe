@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { db } from "../../firebase.config";
 import { collection, getDocs, query, where } from "firebase/firestore";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useRecipes } from "@/context/Recipes";
 import { Select, SelectTrigger, SelectContent, SelectGroup, SelectItem, SelectValue } from '@/components/ui/select'
 
@@ -15,7 +15,7 @@ function SearchBar() {
         { value: 'ingredients', option: 'Ingredients' },
         { value: 'category', option: 'Category' },
     ];
-
+    const inputRef = useRef(null);
     const handleValueChange = (value) => {
         // Find the label based on the selected value
         setFilter(value);
@@ -44,10 +44,18 @@ function SearchBar() {
 
     const recipesRef = collection(db, 'recipes')
 
+    const handleKeyPress = (e) => {
+        if (e.key === "Enter" && searchQuery !== '') {
+            handleSearch();
+            inputRef.current.blur();
+        }
+    }
+
     const handleSearch = () => {
+
         const filters = parameter();
         setFetchedRecipes([]);
-        if (searchQuery === '') return;
+        if (searchQuery === '') return
         let firestoreQuery = query(recipesRef); // Initialize the base query
 
         if (Array.isArray(filters)) {
@@ -107,12 +115,14 @@ function SearchBar() {
                     </Select>
                 </div>
                 <input
+                    ref={inputRef}
                     type="text"
+                    onKeyDown={(e) => handleKeyPress(e)}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Search recipes..."
                     className="flex-grow w-[50%]  p-2 ml-2 text-sm  text-gray-400 border-none bg-inherit placeholder-color focus:outline-none focus:ring-0"
                 />
-                <Button onClick={handleSearch} className="w-24 px-2 ml-2 text-xs text-white bg-red-400 rounded-full md:text-sm hover:opacity-90 hover:bg-red-500">
+                <Button disabled={!searchQuery} onClick={handleSearch} className="w-24 px-2 ml-2 text-xs text-white bg-red-400 rounded-full md:text-sm hover:opacity-90 hover:bg-red-500" >
                     Search
                 </Button>
             </div>
