@@ -31,7 +31,7 @@ function RecipePage() {
                     <TabsTrigger className="px-6 py-1 text-base font-normal rounded-lg md:text-xl" value="bookmarked">Saved Recipes</TabsTrigger>
                 </TabsList>
 
-                <TabsContent value="recipes" className="relative h-full p-4">
+                <TabsContent value="recipes" className="relative p-4 overflow-y-auto h-[45em] md:h-[10em]">
                     {!isLoading ? (
                         <RecipesList recipes={data} />
                     ) : (
@@ -48,7 +48,7 @@ function RecipePage() {
                     )}
                 </TabsContent>
 
-                <TabsContent value="bookmarked" className="relative h-full p-4">
+                <TabsContent value="bookmarked" className="relative  h-[50%] p-4 overflow-y-auto">
                     {!isLoading ? (
                         <RecipesList recipes={data} />
                     ) : (

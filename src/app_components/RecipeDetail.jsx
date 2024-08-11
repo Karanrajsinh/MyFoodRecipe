@@ -138,7 +138,7 @@ const RecipeDetail = () => {
           <div className="flex items-start justify-between mt-4 mb-8">
             <div>
               <p className="mb-1 italic"><span className='font-semibold'>Author:</span> {formatedRecipeData?.author}</p>
-              <div className="flex gap-1 mb-1"><span className='font-semibold'>Category:</span> <p className='w-[15em]'> {formatedRecipeData?.categories.map((category, index) => <span className='mr-1' key={index}>{category}{index === formatedRecipeData?.categories.length - 1 ? '' : ","}</span>)}</p></div>
+              <div className="flex gap-1 mb-1"><span className='font-semibold'>Category:</span> <p className='w-[80%] md:w-[90%]'> {formatedRecipeData?.categories.map((category, index) => <span className='mr-1' key={index}>{category}{index === formatedRecipeData?.categories.length - 1 ? '' : ","}</span>)}</p></div>
               <p className="mb-1"><span className='font-semibold'>Servings:</span> {formatedRecipeData?.servings}</p>
               <p className="mb-1"><span className='font-semibold'>Preparation:</span>{` ${formatedRecipeData?.prepTime?.time} ${formatedRecipeData?.prepTime?.unit}`}</p>
               <p className="mb-1"><span className='font-semibold'>Cooking:</span>{` ${formatedRecipeData?.cookTime?.time} ${formatedRecipeData?.cookTime?.unit}`}</p>

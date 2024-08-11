@@ -8,11 +8,21 @@ import { Select, SelectTrigger, SelectContent, SelectGroup, SelectItem, SelectVa
 
 function SearchBar() {
 
+    const { searchQuery, setSearchQuery, filterType, setFilterType, setSearchResults } = useRecipes();
     const [filter, setFilter] = useState('title');
+    const options = [
+        { value: 'title', option: 'Recipe' },
+        { value: 'ingredients', option: 'Ingredients' },
+        { value: 'category', option: 'Category' },
+    ];
 
-    const [searchQuery, setSearchQuery] = useState('');
+    const handleValueChange = (value) => {
+        // Find the label based on the selected value
+        setFilter(value);
+        const selectedOption = options.find(opt => opt.value === value);
+        setFilterType(selectedOption ? selectedOption.option : ''); // Fallback to empty string if value not found
+    };
     const { setFetchedRecipes, setNoRecipeFound, setFetchingRecipes } = useRecipes();
-
     const parameter = () => {
 
         const query = searchQuery.toLowerCase().trimEnd();
@@ -37,10 +47,7 @@ function SearchBar() {
     const handleSearch = () => {
         const filters = parameter();
         setFetchedRecipes([]);
-        if (searchQuery === '') return console.log('query cannot be empty');
-
-
-
+        if (searchQuery === '') return;
         let firestoreQuery = query(recipesRef); // Initialize the base query
 
         if (Array.isArray(filters)) {
@@ -65,6 +72,12 @@ function SearchBar() {
             });
             setFetchedRecipes(data);
             setFetchingRecipes(false);
+            setSearchResults(
+                {
+                    filter: filterType,
+                    query: searchQuery
+                }
+            )
         }).catch((error) => {
             console.error("Error getting documents: ", error);
         });
@@ -74,15 +87,21 @@ function SearchBar() {
         <div className="flex flex-wrap items-center justify-center w-[95%] gap-4 mx-auto mt-20">
             <div className="flex flex-row p-2 bg-white border border-gray-300 rounded-full md:min-w-[40%]">
                 <div className="gap-4">
-                    <Select defaultValue="title" onValueChange={(value) => setFilter(value)}>
+                    <Select defaultValue="title" onValueChange={handleValueChange}>
                         <SelectTrigger className="text-xs md:text-sm w-[110px] border-none md:min-w-[150px]">
                             <SelectValue placeholder="title" />
                         </SelectTrigger>
                         <SelectContent className="z-50 rounded-xl" ref={(ref) => ref?.addEventListener('touchend', (e) => e.preventDefault())} >
                             <SelectGroup>
-                                <SelectItem className="text-xs md:text-sm rounded-xl" value="title">Recipe</SelectItem>
-                                <SelectItem className="text-xs md:text-sm rounded-xl" value="ingredients">Ingredients</SelectItem>
-                                <SelectItem className="text-xs md:text-sm rounded-xl" value="category">Category</SelectItem>
+                                {options.map(({ value, option }) => (
+                                    <SelectItem
+                                        key={value}
+                                        className="text-xs md:text-sm rounded-xl"
+                                        value={value}
+                                    >
+                                        {option}
+                                    </SelectItem>
+                                ))}
                             </SelectGroup>
                         </SelectContent>
                     </Select>

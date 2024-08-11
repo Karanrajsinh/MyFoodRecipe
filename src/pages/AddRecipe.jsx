@@ -442,7 +442,6 @@ function AddRecipe() {
           >
             Cancel
           </button>
-
         </div>
       </form>
     </div>
