@@ -27,7 +27,7 @@ function Navbar() {
             <p>MyFoodRecipes</p>
           </Link>
         </div>
-        <div className="hidden space-x-2 text-xs md:flex sm:space-x-4 sm:text-base">
+        <div className="hidden space-x-2 text-xs md:flex md:gap-4 sm:space-x-4 sm:text-base">
           <Link
             onClick={closeMenu}
             to="/main/add-recipe"
@@ -41,7 +41,7 @@ function Navbar() {
             to="/main/my-recipes"
             className="relative flex items-center justify-center gap-2 px-2 py-1 hover:text-white sm:px-4 sm:py-1"
           >
-            <img className="w-6" src={recipeList} alt="" />
+            <img className="w-7" src={recipeList} alt="" />
             <span className="relative underline-hover">MyRecipes</span>
           </Link>
           <button

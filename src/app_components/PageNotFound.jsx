@@ -11,8 +11,7 @@ function PageNotFound() {
             </p>
             <button
                 onClick={() => navigate('/')}
-                className="px-6 py-3 text-xs text-white bg-red-400 rounded-full md:text-base hover:bg-opacity-90"
-            >
+                className="px-6 py-3 text-xs text-white bg-red-400 rounded-full md:text-base hover:bg-opacity-90" >
                 Go to Home
             </button>
         </div>

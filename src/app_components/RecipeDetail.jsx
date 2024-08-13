@@ -12,6 +12,7 @@ import { addSavedRecipe, checkIsOwner, checkSavedRecipe, deleteRecipe, getRecipe
 import { useQueryClient } from '@tanstack/react-query';
 import { MdDelete } from 'react-icons/md';
 
+
 const RecipeDetail = () => {
 
   const navigate = useNavigate();
@@ -84,8 +85,9 @@ const RecipeDetail = () => {
 
 
   const handleDelete = () => {
-    setIsDeleting(true);
-    deleteRecipe(uid, id).then(() => {
+    setIsDeleting(true)
+    deleteRecipe(uid, id).then((res) => {
+      console.log(res)
       query.invalidateQueries({ queryKey: ["recipes", "recipes"] }).then(() => {
         toast.success('Recipe Deleted');
         setIsDeleting(false);

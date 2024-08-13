@@ -10,12 +10,12 @@ import RecipeDetail from './app_components/RecipeDetail';
 import { RecipesProvider } from './context/Recipes';
 import MainPage from './pages/MainPage';
 import { Toaster } from 'react-hot-toast';
-import './index.css'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { ErrorBoundary } from 'react-error-boundary';
 import ErrorFallBack from './app_components/ErrorFallBack';
 import PageNotFound from './app_components/PageNotFound';
+import './index.css'
 
 
 
@@ -28,7 +28,7 @@ function App() {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
-        staleTime: 60 * 1000,
+        staleTime: 0,
       }
     }
   })

@@ -48,7 +48,7 @@ function RecipePage() {
                     )}
                 </TabsContent>
 
-                <TabsContent value="bookmarked" className="relative  h-[50%] p-4 overflow-y-auto">
+                <TabsContent value="bookmarked" className="relative p-4 overflow-y-auto h-[45em] md:h-[10em]">
                     {!isLoading ? (
                         <RecipesList recipes={data} />
                     ) : (

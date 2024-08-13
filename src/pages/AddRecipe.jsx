@@ -160,7 +160,12 @@ function AddRecipe() {
               disabled={isLoading || fetchingRecipe}
               type="text"
               placeholder="Title"
-              {...register('title', { required: 'Title is required' })}
+              {...register('title', {
+                required: 'Title is required', pattern: {
+                  value: /^[A-Za-z\s]+$/,
+                  message: 'This Field Must Contain Only Letters'
+                }
+              })}
               className="w-full p-2 mb-1 border border-gray-400 rounded-lg disabled:cursor-not-allowed focus:border-red-400 focus:outline-none"
             />
             {errors.title && <p className="mt-1 text-red-500">{errors.title.message}</p>}
@@ -260,7 +265,12 @@ function AddRecipe() {
                     <input
                       disabled={isLoading || fetchingRecipe}
                       placeholder="Category"
-                      {...register(`categories.${index}.value`, { required: 'Category Cannot Be Empty' })}
+                      {...register(`categories.${index}.value`, {
+                        required: 'Category Cannot Be Empty', pattern: {
+                          value: /^[A-Za-z\s]+$/,
+                          message: 'This Field Must Contain Only Letters'
+                        }
+                      })}
                       className="w-full p-2 border border-gray-400 rounded-lg disabled:cursor-not-allowed focus:border-red-400 focus:outline-none"
                       rows="2"
                     />
@@ -285,7 +295,7 @@ function AddRecipe() {
                   Add Category
                 </button>
               </div>
-              {errors.categories && <p className="mt-1 text-red-500">Each Category Must Have a Value</p>}
+              {errors.categories && <p className="mt-1 text-red-500">Each Category Must Have a Value Without Any Number or Symbols</p>}
             </div>
           </div>
 
@@ -301,7 +311,10 @@ function AddRecipe() {
                       type="text"
                       placeholder="Name"
                       {...register(`ingredients.${index}.name`, {
-                        required: 'Name is required',
+                        required: 'Name is required', pattern: {
+                          value: /^[A-Za-z\s]+$/,
+                          message: 'This Field Must Contain Only Letters'
+                        }
                       })}
                       className="w-1/2 p-2 border border-gray-400 rounded-lg disabled:cursor-not-allowed focus:border-red-400 focus:outline-none"
                     />
@@ -380,7 +393,7 @@ function AddRecipe() {
                   Add Ingredient
                 </button>
               </div>
-              {errors.ingredients && <p className="mt-2 text-red-500">All fields required; Quantity at least 1 unless &quot;To Taste&quot;.</p>}
+              {errors.ingredients && <p className="mt-2 text-red-500">All fields required , Name Only Text, Quantity at least 1 unless &quot;To Taste&quot;.</p>}
             </div>
 
             <div>

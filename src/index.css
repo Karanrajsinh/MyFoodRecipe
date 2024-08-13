@@ -5,6 +5,12 @@
 @layer utilities
 {
   
+  .no-scrollbar::-webkit-scrollbar
+  {
+    width: 0;
+    height: 0;
+  }
+
   .custom-scrollbar::-webkit-scrollbar {
     width: 3px; /* Width of the entire scrollbar */
   }

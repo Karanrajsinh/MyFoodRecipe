@@ -43,10 +43,17 @@ async function updateRecipe(recipeId, data) {
 
 
 async function deleteRecipe(userId, recipeId) {
-    const userRef = doc(db, `/users/${userId}`);
+    const userCollection = collection(db, 'users');
+    let userRef = doc(db, `users/${userId}`);
     const recipeRef = doc(db, `recipes/${recipeId}`);
     deleteDoc(recipeRef);
     updateDoc(userRef, { recipes: arrayRemove(recipeRef) })
+    const recipeQuery = query(userCollection, where('bookmarkedRecipes', 'array-contains', recipeRef));
+    getDocs(recipeQuery).then((res) => res.docs.forEach((data) => {
+        userRef = doc(db, `users/${data.id}`)
+        updateDoc(userRef, { bookmarkedRecipes: arrayRemove(recipeRef) });
+    }))
+
 }
 
 async function getRecipe(id) {
@@ -105,6 +112,7 @@ async function getUserSavedRecipes(uid) {
             const recipeDoc = await getDoc(recipeRef);
             return recipeDoc.data();
         });
+
 
         const fetchedRecipes = await Promise.all(recipePromises);
         return fetchedRecipes;
