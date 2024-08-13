@@ -11,6 +11,7 @@ import { capitalizeText } from '@/utils/uitls';
 import { addSavedRecipe, checkIsOwner, checkSavedRecipe, deleteRecipe, getRecipe, removeSavedRecipe } from '@/utils/firebase';
 import { useQueryClient } from '@tanstack/react-query';
 import { MdDelete } from 'react-icons/md';
+import RecipeNotFound from './RecipeNotFound';
 
 
 const RecipeDetail = () => {
@@ -25,7 +26,7 @@ const RecipeDetail = () => {
   const [isSaving, setIsSaving] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
-
+  const [noRecipeFound, setNoRecipeFound] = useState(false);
 
   const query = useQueryClient();
 
@@ -57,7 +58,7 @@ const RecipeDetail = () => {
 
         // Handle getRecipe result
         if (!recipeRes.exists()) {
-          navigate('/main/my-recipes');
+          setNoRecipeFound(true)
         } else {
           setRecipeData(recipeRes.data());
         }
@@ -122,8 +123,8 @@ const RecipeDetail = () => {
   };
 
   if (loading) return <p className='flex items-center justify-center my-[80%] md:m-[20%] text-center text-sm md:text-lg gap-2 text-slate-500'>Loading Recipe<ImSpinner8 className='text-red-400 spinner-rotate' /></p>
-
-  if (loading === false) return (
+  if (noRecipeFound) return <RecipeNotFound />
+  if (loading === false && !noRecipeFound) return (
     <>
       <div className=" flex  flex-col w-full md:mt-8 md:w-[50%] md:min-h-screen mx-auto">
         <div className="relative bg-black shadow-lg h-44 md:rounded-3xl md:h-60">

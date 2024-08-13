@@ -24,10 +24,9 @@ function MainPage() {
     return (
         <>
             <div className="flex flex-col md:w-[100%] h-[50vh] justify-evenly   mx-auto">
-                <div className="flex flex-col items-center py-12 text-center md:pt-24">
+                <div className="flex flex-col items-center pt-12 text-center md:pt-24">
                     <h1 className="mb-4 text-xl font-bold text-red-400 md:text-3xl">Find Your Next Favorite Recipe</h1>
                     <p className="text-sm md:text-lg text-slate-500">Search by name, ingredient, or type.</p>
-
                     <SearchBar />
                     <div className="relative flex justify-between items-center mt-6 w-[90%] md:w-[40%] mx-auto">
                         <button
@@ -60,13 +59,14 @@ function MainPage() {
                             &gt;
                         </button>
                     </div>
-                </div>
-                <div className=" flex flex-col min-h-[400px]  w-[90%] mx-auto overflow-x-hidden overflow-y-scroll custom-scrollbar">
                     {(fetchingRecipes === false && fetchedRecipes.length > 0) && (
-                        <p className="mb-4 text-sm text-center md:text-lg text-slate-500">
+                        <p className="mt-6 mb-4 text-sm text-center md:text-lg text-slate-500">
                             <span className="text-red-400">&quot;{fetchedRecipes.length}&quot;</span> Results for {searchResults.filter !== 'All' && searchResults.filter} : {`"${searchResults.query}"`}
                         </p>
                     )}
+                </div>
+                <div className=" flex flex-col min-h-[400px]  w-[90%] mx-auto overflow-x-hidden overflow-y-scroll custom-scrollbar">
+
                     {fetchedRecipes.length > 0 && <RecipesList recipes={fetchedRecipes} />}
                     {(!fetchingRecipes && fetchedRecipes.length < 1 && (!noRecipeFound || searchResults.query === '')) && (
                         <p className="flex items-center justify-center gap-2 my-auto text-sm text-center md:text-lg text-slate-500">

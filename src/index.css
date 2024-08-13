@@ -18,6 +18,13 @@
     background-color: #da6965; /* Red color for the scrollbar thumb */
     border-radius: 20px; /* Roundness of the scrollbar thumb */
   }
+
+  @media (max-width: 640px) {
+    .custom-scrollbar::-webkit-scrollbar
+    {
+      width: 0;
+    }
+  }
 }
 
 @layer base {
