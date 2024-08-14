@@ -8,7 +8,7 @@ import RecipesList from "@/app_components/RecipesList";
 
 function MainPage() {
 
-    const { fetchedRecipes, setTrendingQuery, setSearchQuery, setFilter, searchResults, noRecipeFound, fetchingRecipes } = useRecipes();
+    const { fetchedRecipes, setTrendingQuery, setFilterType, setSearchQuery, setFilter, searchResults, noRecipeFound, fetchingRecipes } = useRecipes();
 
     function scrollHorizontally(offset) {
         const scrollableDiv = document.getElementById('scrollableDiv');
@@ -18,13 +18,15 @@ function MainPage() {
         { filter: 'category', query: 'Quick Meal', value: 'category' },
         { filter: 'recipe', query: 'Margarita Pizza', value: 'title' },
         { filter: 'category', query: 'Fast Food', value: 'category' },
+        { filter: 'ingredients', query: 'Potato', value: 'ingredients' },
         { filter: 'recipe', query: 'Lachha Paratha', value: 'title' },
         { filter: 'ingredients', query: 'Lettuce', value: 'ingredients' },
+        { filter: 'category', query: 'Breakfast', value: 'category' },
     ];
     return (
         <>
-            <div className="flex flex-col md:w-[100%] h-[50vh] justify-evenly   mx-auto">
-                <div className="flex flex-col items-center pt-12 text-center md:pt-24">
+            <div className="flex flex-col md:w-[100%] h-[50vh] justify-evenly mx-auto">
+                <div className="flex flex-col items-center pt-12 text-center xl:pt-18 2xl:pt-24">
                     <h1 className="mb-4 text-xl font-bold text-red-400 md:text-3xl">Find Your Next Favorite Recipe</h1>
                     <p className="text-sm md:text-lg text-slate-500">Search by name, ingredient, or type.</p>
                     <SearchBar />
@@ -42,6 +44,7 @@ function MainPage() {
                                     key={index}
                                     onClick={() => {
                                         setFilter(btn.value);
+                                        setFilterType(btn.filter.charAt(0).toUpperCase() + btn.filter.slice(1))
                                         setSearchQuery(btn.query);
                                         setTrendingQuery(btn.query);
                                     }}
@@ -80,7 +83,7 @@ function MainPage() {
                     )}
                     {(!fetchingRecipes && noRecipeFound && fetchedRecipes.length < 1 && searchResults.query !== '') && (
                         <p className="flex items-center justify-center gap-2 my-auto text-sm text-center md:text-lg text-slate-500">
-                            <img className="w-8" src={img} alt="No Recipe Found" />No Recipe Found , For {searchResults.filter}: {`"${searchResults.query}"`}
+                            <img className="w-8" src={img} alt="No Recipe Found" />No Recipe Found , For {searchResults.filter !== "All" && searchResults.filter}: {`"${searchResults.query}"`}
                         </p>
                     )}
                 </div>

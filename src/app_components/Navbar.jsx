@@ -19,7 +19,7 @@ function Navbar() {
 
   const auth = getAuth();
   return (
-    <nav className="sticky top-0 px-0 z-50 py-5 sm:p-8 text-[white] bg-[#f48982] shadow-lg md:shadow-xl fira-sans">
+    <nav className="sticky top-0 px-0 z-50 py-5 md:p-6 xl:p-8 text-[white] bg-[#f88383] shadow-lg md:shadow-xl fira-sans">
       <div className="container flex flex-wrap items-center justify-between mx-auto">
         <div className="flex items-center space-x-2 text-xl font-bold sm:text-xl">
           <Link to="/main" className="flex items-center gap-2">
@@ -84,7 +84,7 @@ function Navbar() {
 
       {/* Mobile Menu */}
       <div
-        className={`fixed top-0 left-0 h-full bg-[#f48982] w-64 z-50 transform ${isOpen ? "translate-x-0" : "-translate-x-full"
+        className={`fixed top-0 left-0 h-full  bg-[#f88383] w-64 z-50 transform ${isOpen ? "translate-x-0" : "-translate-x-full"
           } transition-transform duration-300 ease-in-out`}
       >
         <div className="flex items-center justify-center py-2 mt-24 space-x-2 text-xl font-bold border-b-2 border-white sm:text-xl">

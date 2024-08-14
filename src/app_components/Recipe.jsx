@@ -40,9 +40,9 @@ function Recipe({ recipe }) {
     ingredients: formatedIngredientsList,
     categories: formatedCategories
   }
-
+  // bg-[#ffb9b9]
   return (
-    <Link to={`/main/recipe/${recipe?.id}`} className="bg-[#ffb9b9] frank-ruhl-libre bg-opacity-50 fira-sans text-[#a75858] hover:bg-opacity-80 flex items-center justify-center px-1 py-3 mx-auto  border border-gray-300 rounded-2xl md:rounded-3xl shadow-md w-full max-w-[50em] gap-4 md:p-4">
+    <Link to={`/main/recipe/${recipe?.id}`} className="  bg-red-200 frank-ruhl-libre bg-opacity-80 fira-sans text-[#a75858] hover:bg-opacity-80 flex items-center justify-center px-1 py-3 mx-auto  border border-gray-300 rounded-2xl md:rounded-3xl shadow-md w-full max-w-[50em] gap-4 md:p-4">
       <img
         src={filteredRecipe?.photoUrl}
         alt={filteredRecipe?.title}

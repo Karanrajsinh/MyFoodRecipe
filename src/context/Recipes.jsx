@@ -23,7 +23,9 @@ function RecipesProvider({ children }) {
 
 
   useEffect(() => {
-    if (trendingQuery) handleSearch()
+    if (trendingQuery) {
+      handleSearch();
+    }
     /*eslint-disable */
   }, [trendingQuery])
   /*eslint-enable */
@@ -46,13 +48,10 @@ function RecipesProvider({ children }) {
 
   const recipesRef = collection(db, 'recipes')
 
-  function searchTrending(query) {
-    setSearchQuery(query);
-    handleSearch();
-  }
+
 
   async function handleSearch() {
-    setFetchedRecipes('')
+    setFetchedRecipes('');
     const queries = parameter();
     let firestoreQuery = query(recipesRef); // Initialize the base query
     let allResults = [];
@@ -85,7 +84,6 @@ function RecipesProvider({ children }) {
     } else if (filter === 'category' && queries.category) {
       firestoreQuery = query(firestoreQuery, queries.category);
     } else {
-      console.log('No type found');
       return null;
     }
 
@@ -123,6 +121,13 @@ function RecipesProvider({ children }) {
 
       if (allResults.length === 0) {
         setNoRecipeFound(true);
+        setFetchingRecipes(false);
+        setSearchResults(
+          {
+            filter: filterType,
+            query: searchQuery
+          }
+        )
       } else {
         setFetchedRecipes(allResults);
         setFetchingRecipes(false);
@@ -162,7 +167,7 @@ function RecipesProvider({ children }) {
   return (
     <RecipeContext.Provider value={
       {
-        trendingQuery, setTrendingQuery, handleSearch, searchTrending, filter, setFilter, searchResults, setSearchResults, filterType, setFilterType, searchQuery, setSearchQuery, fetchedRecipes, setFetchedRecipes, fetchingRecipes, setFetchingRecipes, noRecipeFound, setNoRecipeFound
+        trendingQuery, setTrendingQuery, handleSearch, filter, setFilter, searchResults, setSearchResults, filterType, setFilterType, searchQuery, setSearchQuery, fetchedRecipes, setFetchedRecipes, fetchingRecipes, setFetchingRecipes, noRecipeFound, setNoRecipeFound
       }}>
       {children}
     </RecipeContext.Provider>

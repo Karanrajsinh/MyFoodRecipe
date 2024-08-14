@@ -10,7 +10,7 @@ function RecipeNotFound() {
             <div className="text-center">
                 <h1 className="mb-4 text-xl font-bold text-red-400 md:text-3xl">Recipe Not Found</h1>
                 <p className="mb-6 w-[80%] mx-auto text-sm md:text-lg text-slate-500">
-                    Sorry, the recipe you&quot;re looking for doesn&quot;t exist or has been removed.
+                    Sorry, the recipe you&apos;re looking for doesn&apos;t exist or has been removed.
                 </p>
                 <button
                     onClick={() => navigate(-1)}

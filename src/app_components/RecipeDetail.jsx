@@ -137,7 +137,7 @@ const RecipeDetail = () => {
             <h1 className="text-2xl font-bold text-red-100 spectral-sc md:text-4xl">{formatedRecipeData?.title}</h1>
           </div>
         </div>
-        <div className="text-sm md:text-base relative  p-6 md:p-8 mx-auto  text-[#993b3b] min-w-[100%] max-w-[25em] md:min-w-[80%] md:max-w-[70em]">
+        <div className="text-sm md:text-base relative  p-6 md:p-8 mx-auto  text-[#993b3b] min-w-[100%] max-w-[25em] md:min-w-[90%] md:max-w-[90em]">
           <div className="flex items-start justify-between mt-4 mb-8">
             <div>
               <p className="mb-1 italic"><span className='font-semibold'>Author:</span> {formatedRecipeData?.author}</p>
@@ -194,7 +194,7 @@ const RecipeDetail = () => {
             </ol>
           </div>
         </div>
-        <Button className="flex items-center justify-center gap-2 px-6 mx-auto mt-2 mb-4 text-sm text-center bg-red-400 md:gap-3 md:my-6 w-min md:px-10 md:py-6 md:text-lg rounded-3xl hover:bg-opacity-90 hover:bg-red-400" onClick={() => navigate(-1)}><FaArrowLeftLong className='text-sm' /><span className='flex md:mt-1 md:mb-1'>Back</span></Button>
+        <Button className="flex items-center justify-center gap-2 px-6 mx-auto mt-2 mb-4 text-sm text-center bg-red-400 md:gap-3 md:my-6 w-min md:px-7 md:py-6 md:text-[1.025rem] rounded-3xl hover:bg-opacity-90 hover:bg-red-400" onClick={() => navigate(-1)}><FaArrowLeftLong className='text-sm' /><span className='flex md:mt-1 md:mb-1'>Back</span></Button>
       </div>
       {modalOpen &&
         <>
