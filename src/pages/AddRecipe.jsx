@@ -187,7 +187,7 @@ function AddRecipe() {
               disabled={isLoading || fetchingRecipe}
               type="number"
               placeholder="Servings"
-              {...register('servings', { required: 'Servings is required' })}
+              {...register('servings', { required: 'Servings is required', min: { value: 1, message: 'Must be  greater than 0' } })}
               className="w-full p-2 mt-8 border border-gray-400 rounded-lg disabled:cursor-not-allowed focus:border-red-400 focus:outline-none"
             />
             {errors.servings && <p className="mt-1 text-red-500">{errors.servings.message}</p>}

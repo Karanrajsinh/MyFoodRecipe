@@ -30,7 +30,7 @@ function MainPage() {
                     <h1 className="mb-4 text-xl font-bold text-red-400 md:text-3xl">Find Your Next Favorite Recipe</h1>
                     <p className="text-sm md:text-lg text-slate-500">Search by name, ingredient, or type.</p>
                     <SearchBar />
-                    <div className="relative flex justify-between items-center mt-6 w-[90%] md:w-[40%] mx-auto">
+                    <div className="relative flex justify-between items-center mt-6 w-[90%] md:w-[60%] lg:w-[40%] mx-auto">
                         <button
                             onClick={() => scrollHorizontally(-200)}
                             className="hidden px-4 py-2 mr-2 text-white bg-red-400 rounded-full shadow-md md:block hover:bg-opacity-80"

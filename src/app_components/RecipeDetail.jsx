@@ -176,7 +176,7 @@ const RecipeDetail = () => {
             </div>
           </div>
           <div className="mb-6">
-            <h3 className="mb-2 text-lg font-semibold text-red-600 md:mb-4 frank-ruhl-libre md:text-3xl">Ingredients</h3>
+            <h3 className="mb-2 text-lg font-semibold text-red-600 md:mb-4 frank-ruhl-libre md:text-2xl">Ingredients</h3>
             <ul className="pl-5 mb-4 list-disc">
               {formatedRecipeData?.ingredients.map((ingredient, index) => (
                 <li key={index} className="mb-1 md:text-lg">
@@ -186,7 +186,7 @@ const RecipeDetail = () => {
             </ul>
           </div>
           <div>
-            <h3 className="mb-2 text-lg font-semibold text-red-600 md:mb-4 frank-ruhl-libre md:text-3xl">Steps</h3>
+            <h3 className="mb-2 text-lg font-semibold text-red-600 md:mb-4 frank-ruhl-libre md:text-2xl">Steps</h3>
             <ol className="pl-5 list-decimal">
               {formatedRecipeData?.steps.map((step, index) => (
                 <li key={index} className="mb-3 md:mb-5 md:text-lg">{step.description}</li>

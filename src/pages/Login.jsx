@@ -9,7 +9,7 @@ import img from '../../public/recipe-book.png'
 function Login() {
   const { error, setError } = useUserAuth();
   const [isLoading, setIsLoading] = useState(false);
-  const [type, setType] = useState('SignUp');
+  const [type, setType] = useState('SignIn');
   const navigate = useNavigate();
   const { register, handleSubmit, formState: { errors } } = useForm();
 
@@ -78,6 +78,7 @@ function Login() {
             <input
               disabled={isLoading}
               type="email"
+              defaultValue={'test@gmail.com'}
               placeholder="Email"
               className="w-full p-2 text-sm border rounded-lg focus:border-red-400 focus:outline-none lg:text-base"
               {...register('email', {
@@ -93,6 +94,7 @@ function Login() {
           <div className="mb-4">
             <input
               disabled={isLoading}
+              defaultValue={'123456'}
               type="password"
               placeholder="Password"
               autoComplete="password"
@@ -106,8 +108,14 @@ function Login() {
             type="submit"
             className="flex items-center justify-center w-full gap-2 p-2 text-sm text-white bg-red-400 rounded-lg lg:text-base"
           >
-            {type === "SignUp" ? "Sign Up" : "Sign In"}
-            {isLoading && <ImSpinner8 className="spinner-rotate" />}
+            {!isLoading ? (
+              type === "SignUp" ? "Sign Up" : "Sign In"
+            ) : (
+              <>
+                <ImSpinner8 className="spinner-rotate" />
+                {type === "SignUp" ? "Signing Up" : "Signing In"}
+              </>
+            )}
           </button>
           <p className="mt-4 text-sm lg:text-base">
             {type === "SignIn" ? "Don't Have An Account?" : "Already Have An Account?"}
